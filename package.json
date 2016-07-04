@@ -1,8 +1,8 @@
 {
   "name": "clus",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "A dom class helper.",
-  "main": "src/index.js",
+  "main": "dist/clus.js",
   "scripts": {
     "build": "rm -rf dist && npm run roll:dev",
     "publish": "rm -rf dist && npm run roll:dev && npm run roll:prod",
