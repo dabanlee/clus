@@ -8,7 +8,7 @@ export default {
     moduleName: config.moduleName,
     moduleId: config.moduleId,
     entry: `${paths.source.root}index.js`,
-    dest: `${paths.dist.root}${config.moduleName}.js`,
+    dest: `${paths.dist.root}${config.fileName}.js`,
     sourceMap: true,
     plugins: [
         json(),

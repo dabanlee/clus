@@ -9,7 +9,7 @@ export default {
     moduleName: config.moduleName,
     moduleId: config.moduleId,
     entry: `${paths.source.root}index.js`,
-    dest: `${paths.dist.root}${config.moduleName}.min.js`,
+    dest: `${paths.dist.root}${config.fileName}.min.js`,
     sourceMap: true,
     plugins: [
         json(),

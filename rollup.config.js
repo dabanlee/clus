@@ -9,6 +9,7 @@ export const paths = {
 };
 
 export default {
-	moduleName: 'clus',
-	moduleId: 'clus',
+	moduleName: 'Clus',
+	moduleId: 'Clus',
+    fileName: 'clus',
 }
