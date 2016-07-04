@@ -4,12 +4,31 @@
     (factory());
 }(this, function () { 'use strict';
 
+    function query(selector) {
+        return document.querySelector(selector);
+    }
+
     function getClass(el) {
-        return el.className;
+        return el ? el.className : '';
     }
 
     function setClass(el, cls) {
-        el.setAttribute('class', cls);
+        return el ? el.setAttribute('class', cls) : '';
+    }
+
+    function hasClass(el, cls) {
+        if (el && el.classList) {
+            return el.classList.contains(cls);
+        } else {
+            if (el) {
+                var classList = el.className.split(' ');
+                classList.map(function (item) {
+                    return item == cls ? true : false;
+                });
+            } else {
+                return false;
+            }
+        }
     }
 
     function addClass(el, cls) {
@@ -39,19 +58,9 @@
         }
     }
 
-    function hasClass(el, cls) {
-        if (el && el.classList) {
-            return el.classList.contains(cls);
-        } else {
-            var current = ' ' + getClass(el) + ' ',
-                clsList = current.split(' ');
-            clsList.map(function (item) {
-                return item == cls ? true : false;
-            });
-        }
-    }
-
-    var clus = {
+    var Clus = {
+        query: query,
+        // class helper
         addClass: addClass,
         removeClass: removeClass,
         hasClass: hasClass,
@@ -61,7 +70,7 @@
         has: hasClass
     };
 
-    window.clus = clus;
+    window.Clus = Clus;
 
 }));
 //# sourceMappingURL=clus.js.map
