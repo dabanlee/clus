@@ -1,6 +1,6 @@
 {
   "name": "clus",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A dom class helper.",
   "main": "dist/clus.js",
   "scripts": {
