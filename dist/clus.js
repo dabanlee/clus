@@ -1,6 +1,6 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory() :
-    typeof define === 'function' && define.amd ? define('clus', factory) :
+    typeof define === 'function' && define.amd ? define('Clus', factory) :
     (factory());
 }(this, function () { 'use strict';
 
@@ -58,16 +58,26 @@
         }
     }
 
+    function toggleClass(el, cls) {
+        if (hasClass(el, cls)) {
+            removeClass(el, cls);
+        } else {
+            addClass(el, cls);
+        }
+    }
+
     var Clus = {
         query: query,
         // class helper
         addClass: addClass,
         removeClass: removeClass,
         hasClass: hasClass,
+        toggleClass: toggleClass,
         // for short
         add: addClass,
         remove: removeClass,
-        has: hasClass
+        has: hasClass,
+        toggle: toggleClass
     };
 
     window.Clus = Clus;

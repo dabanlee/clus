@@ -1,10 +1,11 @@
 // @flow
 
 import {
+    query,
+    hasClass,
     addClass,
     removeClass,
-    hasClass,
-    query,
+    toggleClass,
 } from './utils/index.js';
 
 let Clus = {
@@ -13,10 +14,12 @@ let Clus = {
     addClass: addClass,
     removeClass: removeClass,
     hasClass: hasClass,
+    toggleClass: toggleClass,
     // for short
     add: addClass,
     remove: removeClass,
     has: hasClass,
+    toggle: toggleClass,
 };
 
 window.Clus = Clus;

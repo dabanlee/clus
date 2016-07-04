@@ -53,3 +53,11 @@ export function removeClass(el, cls) {
         el.removeAttribute('class');
     }
 }
+
+export function toggleClass(el, cls) {
+    if(hasClass(el, cls)) {
+        removeClass(el, cls);
+    } else {
+        addClass(el, cls);
+    }
+}
