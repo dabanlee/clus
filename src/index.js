@@ -1,8 +1,15 @@
 // @flow
 
-import { addClass, removeClass, hasClass, } from './utils/index.js';
+import {
+    addClass,
+    removeClass,
+    hasClass,
+    query,
+} from './utils/index.js';
 
-let clus = {
+let Clus = {
+    query: query,
+    // class helper
     addClass: addClass,
     removeClass: removeClass,
     hasClass: hasClass,
@@ -12,4 +19,4 @@ let clus = {
     has: hasClass,
 };
 
-window.clus = clus;
+window.Clus = Clus;
