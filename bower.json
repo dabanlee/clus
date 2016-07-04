@@ -1,0 +1,28 @@
+{
+  "name": "clus",
+  "description": "dom class helper.",
+  "main": "src/index.js",
+  "authors": [
+    "JustClear"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "clus",
+    "library",
+    "class",
+    "dom"
+  ],
+  "homepage": "https://github.com/JustClear/chus",
+  "ignore": [
+    "**/.*",
+    ".*",
+    "rollup.*.js",
+    "*.json",
+    "*.md",
+    "*.yml",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
