@@ -1,86 +1,77 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory() :
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define('Clus', factory) :
-    (factory());
+    (global.Clus = factory());
 }(this, function () { 'use strict';
 
-    function query(selector) {
-        return document.querySelector(selector);
+    function Clus(selector) {
+        return Clus.prototype.init(selector);
     }
 
-    function getClass(el) {
-        return el ? el.className : '';
-    }
+    Clus.prototype = {
+        constructor: Clus,
+        version: '1.0.0',
+        nodes: [],
+        init: function init(selector) {
+            if (!selector) {
+                return this.nodes;
+            }
 
-    function setClass(el, cls) {
-        return el ? el.setAttribute('class', cls) : '';
-    }
-
-    function hasClass(el, cls) {
-        if (el && el.classList) {
-            return el.classList.contains(cls);
-        } else {
-            if (el) {
-                var classList = el.className.split(' ');
-                classList.map(function (item) {
-                    return item == cls ? true : false;
-                });
+            if (typeof selector === 'string') {
+                var el = document.querySelectorAll(selector);
+                if (el) {
+                    this.nodes = Array.prototype.slice.call(el);
+                }
+                return this;
+            } else if (selector.nodeType) {
+                this.nodes = selector;
+                return this;
             } else {
-                return false;
+                return this.nodes;
             }
-        }
-    }
-
-    function addClass(el, cls) {
-        if (el && el.classList) {
-            el.classList.add(cls);
-        } else {
-            var current = ' ' + getClass(el) + ' ';
-            if (current.indexOf(' ' + cls + ' ') < 0) {
-                setClass(el, (current + cls).trim());
+        },
+        addClass: function addClass(cls) {
+            if (!cls) {
+                return this;
             }
-        }
-    }
 
-    function removeClass(el, cls) {
-        if (el && el.classList) {
-            el.classList.remove(cls);
-        } else {
-            var current = ' ' + getClass(el) + ' ',
-                target = ' ' + cls + ' ';
-            while (current.indexOf(target) >= 0) {
-                current = current.replace(target, ' ');
+            this.nodes.map(function (node) {
+                node.classList.add(cls);
+            });
+            return this;
+        },
+        removeClass: function removeClass(cls) {
+            if (!cls) {
+                return this;
             }
-            setClass(el, current.trim());
-        }
-        if (!el.className) {
-            el.removeAttribute('class');
-        }
-    }
 
-    function toggleClass(el, cls) {
-        if (hasClass(el, cls)) {
-            removeClass(el, cls);
-        } else {
-            addClass(el, cls);
-        }
-    }
+            this.nodes.map(function (node) {
+                node.classList.remove(cls);
+            });
+            return this;
+        },
+        hasClass: function hasClass(cls) {
+            if (!cls) {
+                return this;
+            }
 
-    var Clus = {
-        query: query,
-        // class helper
-        addClass: addClass,
-        removeClass: removeClass,
-        hasClass: hasClass,
-        toggleClass: toggleClass,
-        // for short
-        add: addClass,
-        remove: removeClass,
-        has: hasClass,
-        toggle: toggleClass
+            this.nodes.map(function (node) {
+                node.classList.contains(cls);
+            });
+        },
+        toggleClass: function toggleClass(cls) {
+            if (this.hasClass(cls)) {
+                this.removeClass(cls);
+            } else {
+                this.addClass(cls);
+            }
+            return this;
+        }
     };
 
-    window.Clus = Clus;
+    window.Clus = window.C = Clus;
+
+    return Clus;
 
 }));
 //# sourceMappingURL=clus.js.map
