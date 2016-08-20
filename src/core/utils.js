@@ -2,20 +2,6 @@
 // utils.js
 //
 
-let class2type = {};
-const toString = class2type.toString; // Object.prototype.toString
-const hasOwn = class2type.hasOwnProperty;
-const fnToString = hasOwn.toString; // Object.toString/Function.toString
-const ObjectFunctionString = fnToString.call( Object ); // 'function Object() { [native code] }'
-
-export function isObject(object) {
-    return Object.prototype.toString.call(object) === '[object Object]';
-}
-
-export function isArray(object) {
-     return Object.prototype.toString.call(object) === '[object Array]';
-}
-
 export function type(object) {
     let class2type = {},
         type = class2type.toString.call(object),
@@ -40,7 +26,13 @@ export function type(object) {
 }
 
 export function isPlainObject(object) {
-    let proto, ctor;
+    let proto,
+        ctor,
+        class2type = {},
+        toString = class2type.toString, // Object.prototype.toString
+        hasOwn = class2type.hasOwnProperty,
+        fnToString = hasOwn.toString, // Object.toString/Function.toString
+        ObjectFunctionString = fnToString.call( Object ); // 'function Object() { [native code] }'
 
     if (!object || toString.call(object) !== '[object Object]') {
         return false;

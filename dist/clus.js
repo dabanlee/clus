@@ -14,13 +14,6 @@
   // utils.js
   //
 
-  var class2type = {};
-  var toString = class2type.toString; var hasOwn = class2type.hasOwnProperty;
-  var fnToString = hasOwn.toString; // Object.toString/Function.toString
-  var ObjectFunctionString = fnToString.call(Object); function isArray(object) {
-      return Object.prototype.toString.call(object) === '[object Array]';
-  }
-
   function type(object) {
       var class2type = {},
           type = class2type.toString.call(object),
@@ -39,7 +32,14 @@
 
   function isPlainObject(object) {
       var proto = void 0,
-          ctor = void 0;
+          ctor = void 0,
+          class2type = {},
+          toString = class2type.toString,
+          // Object.prototype.toString
+      hasOwn = class2type.hasOwnProperty,
+          fnToString = hasOwn.toString,
+          // Object.toString/Function.toString
+      ObjectFunctionString = fnToString.call(Object); // 'function Object() { [native code] }'
 
       if (!object || toString.call(object) !== '[object Object]') {
           return false;
@@ -84,7 +84,7 @@
 
       for (; i < length; i++) {
           //
-          if (options == arguments[i] !== null) {
+          if ((options = arguments[i]) !== null) {
               // for in source object
               for (name in options) {
 
@@ -96,7 +96,7 @@
                   }
 
                   // deep clone
-                  if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+                  if (deep && copy && (isPlainObject(copy) || (copyIsArray = Array.isArray(copy)))) {
                       // if copy is array
                       if (copyIsArray) {
                           copyIsArray = false;
@@ -194,7 +194,7 @@ var   document$1;
   	}
   	return 0;
   };
-var   hasOwn$1 = {}.hasOwnProperty;
+  var hasOwn = {}.hasOwnProperty;
   var arr = [];
   var pop = arr.pop;
   var push_native = arr.push;
@@ -1083,7 +1083,7 @@ var   hasOwn$1 = {}.hasOwnProperty;
   	var fn = Expr.attrHandle[name.toLowerCase()],
 
   	// Don't get fooled by Object.prototype properties (jQuery #13807)
-  	val = fn && hasOwn$1.call(Expr.attrHandle, name.toLowerCase()) ? fn(elem, name, !documentIsHTML) : undefined;
+  	val = fn && hasOwn.call(Expr.attrHandle, name.toLowerCase()) ? fn(elem, name, !documentIsHTML) : undefined;
 
   	return val !== undefined ? val : support.attributes || !documentIsHTML ? elem.getAttribute(name) : (val = elem.getAttributeNode(name)) && val.specified ? val.value : null;
   };
