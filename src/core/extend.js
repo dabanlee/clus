@@ -28,7 +28,7 @@ export default function extend() {
 
     for (; i < length; i++) {
         //
-        if ((options == arguments[i]) !== null) {
+        if ((options = arguments[i]) !== null) {
             // for in source object
             for (name in options) {
 
