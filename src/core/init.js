@@ -7,10 +7,9 @@ export default function init(Clus) {
         if (!selector) {
             return;
         } else {
-            let el = document.querySelector(selector);
-            if (el) {
-                this[0] = el;
-                this.length = 1;
+            let els = Clus.find(selector);
+            if (els.length) {
+                Clus.merge(this, els);
             }
             return this;
         }

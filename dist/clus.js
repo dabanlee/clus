@@ -14,13 +14,6 @@
   // utils.js
   //
 
-  var class2type = {};
-  var toString = class2type.toString; var hasOwn = class2type.hasOwnProperty;
-  var fnToString = hasOwn.toString; // Object.toString/Function.toString
-  var ObjectFunctionString = fnToString.call(Object); function isArray(object) {
-      return Object.prototype.toString.call(object) === '[object Array]';
-  }
-
   function type(object) {
       var class2type = {},
           type = class2type.toString.call(object),
@@ -39,7 +32,14 @@
 
   function isPlainObject(object) {
       var proto = void 0,
-          ctor = void 0;
+          ctor = void 0,
+          class2type = {},
+          toString = class2type.toString,
+          // Object.prototype.toString
+      hasOwn = class2type.hasOwnProperty,
+          fnToString = hasOwn.toString,
+          // Object.toString/Function.toString
+      ObjectFunctionString = fnToString.call(Object); // 'function Object() { [native code] }'
 
       if (!object || toString.call(object) !== '[object Object]') {
           return false;
@@ -53,6 +53,20 @@
 
       ctor = hasOwn.call(proto, 'constructor') && proto.constructor;
       return typeof ctor === 'function' && fnToString.call(ctor) === ObjectFunctionString;
+  }
+
+  function merge(first, second) {
+      var length = +second.length,
+          j = 0,
+          i = first.length;
+
+      for (; j < length; j++) {
+          first[i++] = second[j];
+      }
+
+      first.length = i;
+
+      return first;
   }
 
   function extend() {
@@ -84,7 +98,7 @@
 
       for (; i < length; i++) {
           //
-          if (options == arguments[i] !== null) {
+          if ((options = arguments[i]) !== null) {
               // for in source object
               for (name in options) {
 
@@ -96,7 +110,7 @@
                   }
 
                   // deep clone
-                  if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+                  if (deep && copy && (isPlainObject(copy) || (copyIsArray = Array.isArray(copy)))) {
                       // if copy is array
                       if (copyIsArray) {
                           copyIsArray = false;
@@ -129,6 +143,48 @@
 
   Clus.extend = Clus.fn.extend = extend;
 
+  Clus.extend({
+      merge: merge
+  });
+
+  // ============
+  // extend selector 
+  // ============
+
+  Clus.fn.extend({
+      pushStack: function pushStack(els) {
+          var ret = merge(this.contructor(), els);
+          ret.prevObject = this;
+          return ret;
+      },
+      find: function find(selector) {
+          var i = 0,
+              len = this.length,
+              self = this,
+              ret = this.pushStack([]);
+
+          for (; i < len; i++) {
+              Clus.find(selector, self[i], ret);
+          }
+
+          return ret;
+      },
+      end: function end() {
+          return this.prevObject || this.constructor();
+      },
+      eq: function eq(i) {
+          var len = this.length,
+              j = +i + (i < 0 ? len : 0); // reverse find
+          return this.pushStack(j >= 0 && j < len ? [this[j]] : []);
+      },
+      first: function first() {
+          return this.eq(0);
+      },
+      last: function last() {
+          return this.eq(-1);
+      }
+  });
+
   window.Clus = window.C = window.$$ = Clus;
 
   //
@@ -140,10 +196,9 @@
           if (!selector) {
               return;
           } else {
-              var el = document.querySelector(selector);
-              if (el) {
-                  this[0] = el;
-                  this.length = 1;
+              var els = Clus.find(selector);
+              if (els.length) {
+                  Clus.merge(this, els);
               }
               return this;
           }
@@ -174,7 +229,7 @@
   var sortInput;
   var hasDuplicate;
   var setDocument;
-var   document$1;
+  var document;
   var docElem;
   var documentIsHTML;
   var rbuggyQSA;
@@ -194,7 +249,7 @@ var   document$1;
   	}
   	return 0;
   };
-var   hasOwn$1 = {}.hasOwnProperty;
+  var hasOwn = {}.hasOwnProperty;
   var arr = [];
   var pop = arr.pop;
   var push_native = arr.push;
@@ -335,10 +390,10 @@ var   hasOwn$1 = {}.hasOwnProperty;
   	// Try to shortcut find operations (as opposed to filters) in HTML documents
   	if (!seed) {
 
-  		if ((context ? context.ownerDocument || context : preferredDoc) !== document$1) {
+  		if ((context ? context.ownerDocument || context : preferredDoc) !== document) {
   			setDocument(context);
   		}
-  		context = context || document$1;
+  		context = context || document;
 
   		if (documentIsHTML) {
 
@@ -474,7 +529,7 @@ var   hasOwn$1 = {}.hasOwnProperty;
    * @param {Function} fn Passed the created element and returns a boolean result
    */
   function assert(fn) {
-  	var el = document$1.createElement("fieldset");
+  	var el = document.createElement("fieldset");
 
   	try {
   		return !!fn(el);
@@ -665,18 +720,18 @@ var   hasOwn$1 = {}.hasOwnProperty;
   	    doc = node ? node.ownerDocument || node : preferredDoc;
 
   	// Return early if doc is invalid or already selected
-  	if (doc === document$1 || doc.nodeType !== 9 || !doc.documentElement) {
-  		return document$1;
+  	if (doc === document || doc.nodeType !== 9 || !doc.documentElement) {
+  		return document;
   	}
 
   	// Update global variables
-  	document$1 = doc;
-  	docElem = document$1.documentElement;
-  	documentIsHTML = !isXML(document$1);
+  	document = doc;
+  	docElem = document.documentElement;
+  	documentIsHTML = !isXML(document);
 
   	// Support: IE 9-11, Edge
   	// Accessing iframe documents after unload throws "permission denied" errors (jQuery #13936)
-  	if (preferredDoc !== document$1 && (subWindow = document$1.defaultView) && subWindow.top !== subWindow) {
+  	if (preferredDoc !== document && (subWindow = document.defaultView) && subWindow.top !== subWindow) {
 
   		// Support: IE 11, Edge
   		if (subWindow.addEventListener) {
@@ -704,12 +759,12 @@ var   hasOwn$1 = {}.hasOwnProperty;
 
   	// Check if getElementsByTagName("*") returns only elements
   	support.getElementsByTagName = assert(function (el) {
-  		el.appendChild(document$1.createComment(""));
+  		el.appendChild(document.createComment(""));
   		return !el.getElementsByTagName("*").length;
   	});
 
   	// Support: IE<9
-  	support.getElementsByClassName = rnative.test(document$1.getElementsByClassName);
+  	support.getElementsByClassName = rnative.test(document.getElementsByClassName);
 
   	// Support: IE<10
   	// Check if getElementById returns elements by name
@@ -717,7 +772,7 @@ var   hasOwn$1 = {}.hasOwnProperty;
   	// so use a roundabout getElementsByName test
   	support.getById = assert(function (el) {
   		docElem.appendChild(el).id = expando;
-  		return !document$1.getElementsByName || !document$1.getElementsByName(expando).length;
+  		return !document.getElementsByName || !document.getElementsByName(expando).length;
   	});
 
   	// ID filter and find
@@ -828,7 +883,7 @@ var   hasOwn$1 = {}.hasOwnProperty;
   	// See https://bugs.jquery.com/ticket/13378
   	rbuggyQSA = [];
 
-  	if (support.qsa = rnative.test(document$1.querySelectorAll)) {
+  	if (support.qsa = rnative.test(document.querySelectorAll)) {
   		// Build QSA regex
   		// Regex strategy adopted from Diego Perini
   		assert(function (el) {
@@ -878,7 +933,7 @@ var   hasOwn$1 = {}.hasOwnProperty;
 
   			// Support: Windows 8 Native Apps
   			// The type and name attributes are restricted during .innerHTML assignment
-  			var input = document$1.createElement("input");
+  			var input = document.createElement("input");
   			input.setAttribute("type", "hidden");
   			el.appendChild(input).setAttribute("name", "D");
 
@@ -974,10 +1029,10 @@ var   hasOwn$1 = {}.hasOwnProperty;
   		if (compare & 1 || !support.sortDetached && b.compareDocumentPosition(a) === compare) {
 
   			// Choose the first element that is related to our preferred document
-  			if (a === document$1 || a.ownerDocument === preferredDoc && contains(preferredDoc, a)) {
+  			if (a === document || a.ownerDocument === preferredDoc && contains(preferredDoc, a)) {
   				return -1;
   			}
-  			if (b === document$1 || b.ownerDocument === preferredDoc && contains(preferredDoc, b)) {
+  			if (b === document || b.ownerDocument === preferredDoc && contains(preferredDoc, b)) {
   				return 1;
   			}
 
@@ -1002,7 +1057,7 @@ var   hasOwn$1 = {}.hasOwnProperty;
 
   		// Parentless nodes are either documents or disconnected
   		if (!aup || !bup) {
-  			return a === document$1 ? -1 : b === document$1 ? 1 : aup ? -1 : bup ? 1 : sortInput ? indexOf(sortInput, a) - indexOf(sortInput, b) : 0;
+  			return a === document ? -1 : b === document ? 1 : aup ? -1 : bup ? 1 : sortInput ? indexOf(sortInput, a) - indexOf(sortInput, b) : 0;
 
   			// If the nodes are siblings, we can do a quick check
   		} else if (aup === bup) {
@@ -1032,7 +1087,7 @@ var   hasOwn$1 = {}.hasOwnProperty;
   		ap[i] === preferredDoc ? -1 : bp[i] === preferredDoc ? 1 : 0;
   	};
 
-  	return document$1;
+  	return document;
   };
 
   Sizzle.matches = function (expr, elements) {
@@ -1041,7 +1096,7 @@ var   hasOwn$1 = {}.hasOwnProperty;
 
   Sizzle.matchesSelector = function (elem, expr) {
   	// Set document vars if needed
-  	if ((elem.ownerDocument || elem) !== document$1) {
+  	if ((elem.ownerDocument || elem) !== document) {
   		setDocument(elem);
   	}
 
@@ -1063,12 +1118,12 @@ var   hasOwn$1 = {}.hasOwnProperty;
   		} catch (e) {}
   	}
 
-  	return Sizzle(expr, document$1, null, [elem]).length > 0;
+  	return Sizzle(expr, document, null, [elem]).length > 0;
   };
 
   Sizzle.contains = function (context, elem) {
   	// Set document vars if needed
-  	if ((context.ownerDocument || context) !== document$1) {
+  	if ((context.ownerDocument || context) !== document) {
   		setDocument(context);
   	}
   	return contains(context, elem);
@@ -1076,14 +1131,14 @@ var   hasOwn$1 = {}.hasOwnProperty;
 
   Sizzle.attr = function (elem, name) {
   	// Set document vars if needed
-  	if ((elem.ownerDocument || elem) !== document$1) {
+  	if ((elem.ownerDocument || elem) !== document) {
   		setDocument(elem);
   	}
 
   	var fn = Expr.attrHandle[name.toLowerCase()],
 
   	// Don't get fooled by Object.prototype properties (jQuery #13807)
-  	val = fn && hasOwn$1.call(Expr.attrHandle, name.toLowerCase()) ? fn(elem, name, !documentIsHTML) : undefined;
+  	val = fn && hasOwn.call(Expr.attrHandle, name.toLowerCase()) ? fn(elem, name, !documentIsHTML) : undefined;
 
   	return val !== undefined ? val : support.attributes || !documentIsHTML ? elem.getAttribute(name) : (val = elem.getAttributeNode(name)) && val.specified ? val.value : null;
   };
@@ -1532,7 +1587,7 @@ var   hasOwn$1 = {}.hasOwnProperty;
   		},
 
   		"focus": function focus(elem) {
-  			return elem === document$1.activeElement && (!document$1.hasFocus || document$1.hasFocus()) && !!(elem.type || elem.href || ~elem.tabIndex);
+  			return elem === document.activeElement && (!document.hasFocus || document.hasFocus()) && !!(elem.type || elem.href || ~elem.tabIndex);
   		},
 
   		// Boolean properties
@@ -2003,7 +2058,7 @@ var   hasOwn$1 = {}.hasOwnProperty;
   		    len = elems.length;
 
   		if (outermost) {
-  			outermostContext = context === document$1 || context || outermost;
+  			outermostContext = context === document || context || outermost;
   		}
 
   		// Add elements passing elementMatchers directly to results
@@ -2012,12 +2067,12 @@ var   hasOwn$1 = {}.hasOwnProperty;
   		for (; i !== len && (elem = elems[i]) != null; i++) {
   			if (byElement && elem) {
   				j = 0;
-  				if (!context && elem.ownerDocument !== document$1) {
+  				if (!context && elem.ownerDocument !== document) {
   					setDocument(elem);
   					xml = !documentIsHTML;
   				}
   				while (matcher = elementMatchers[j++]) {
-  					if (matcher(elem, context || document$1, xml)) {
+  					if (matcher(elem, context || document, xml)) {
   						results.push(elem);
   						break;
   					}
@@ -2213,7 +2268,7 @@ var   hasOwn$1 = {}.hasOwnProperty;
   // Detached nodes confoundingly follow *each other*
   support.sortDetached = assert(function (el) {
   	// Should return 1, but returns 4 (following)
-  	return el.compareDocumentPosition(document$1.createElement("fieldset")) & 1;
+  	return el.compareDocumentPosition(document.createElement("fieldset")) & 1;
   });
 
   // Support: IE<8
@@ -2269,7 +2324,7 @@ var   hasOwn$1 = {}.hasOwnProperty;
   };
 
   function initSizzle(Clus) {
-      Clus.find = Clus.fn.find = Sizzle;
+      Clus.find = Sizzle;
   }
 
   init(Clus);

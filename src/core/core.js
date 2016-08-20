@@ -3,6 +3,7 @@
 //
 
 import extend from './extend.js';
+import { merge } from './utils.js';
 
 export default function Clus(selector, context) {
     return new Clus.fn.init(selector, context);
@@ -14,5 +15,47 @@ Clus.fn = Clus.prototype = {
 };
 
 Clus.extend = Clus.fn.extend = extend;
+
+Clus.extend({
+    merge,
+});
+
+// ============
+// extend selector 
+// ============
+
+Clus.fn.extend({
+    pushStack: function (els) {
+        let ret = merge(this.contructor(), els);
+        ret.prevObject = this;
+        return ret;
+    },
+    find: function (selector) {
+        let i = 0,
+            len = this.length,
+            self = this,
+            ret = this.pushStack([]);
+
+        for (; i < len; i++) {
+            Clus.find(selector, self[ i ], ret);
+        }
+
+        return ret;
+    },
+    end: function end() {
+        return this.prevObject || this.constructor();
+    },
+    eq: function eq(i) {
+        let len = this.length,
+            j = +i + ( i < 0 ? len : 0 ); // reverse find
+        return this.pushStack(j >= 0 && j < len ? [this[j]] : []);
+    },
+    first: function first() {
+        return this.eq(0);
+    },
+    last: function last() {
+        return this.eq(-1);
+    },
+});
 
 window.Clus = window.C = window.$$ = Clus;
