@@ -6,6 +6,8 @@ export default function init(Clus) {
     Clus.fn.init = function (selector, context, root) {
         if (!selector) {
             return;
+        } else if (Clus.type(selector) === 'function') {
+            return Clus(document).ready(selector);
         } else if (selector === document) {
             Clus.merge(this, [document]);
             return this;

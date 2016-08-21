@@ -194,6 +194,18 @@
   var rnotwhite = /\S+/g;
   var rclass = /[\t\r\n\f]/g;
 
+  function ready(callback) {
+      if (document && /complete|loaded|interactive/.test(document.readyState) && document.body) {
+          callback();
+      } else {
+          document.addEventListener('DOMContentLoaded', function () {
+              callback();
+          }, false);
+      }
+
+      return this;
+  }
+
   function getClass(el) {
       return el.getAttribute && el.getAttribute('class') || '';
   }
@@ -306,6 +318,7 @@
   }
 
   var DOM = {
+      ready: ready,
       addClass: addClass,
       removeClass: removeClass,
       hasClass: hasClass,
@@ -330,7 +343,8 @@
   Clus$1.extend({
       find: find,
       merge: merge,
-      trim: trim
+      trim: trim,
+      type: type
   });
 
   // ====================================
@@ -354,6 +368,8 @@
       Clus.fn.init = function (selector, context, root) {
           if (!selector) {
               return;
+          } else if (Clus.type(selector) === 'function') {
+              return Clus(document).ready(selector);
           } else if (selector === document) {
               Clus.merge(this, [document]);
               return this;

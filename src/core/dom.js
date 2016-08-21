@@ -5,6 +5,24 @@
 const rnotwhite = /\S+/g;
 const rclass = /[\t\r\n\f]/g;
 
+function ready(callback) {
+    if (
+        document
+        &&
+        /complete|loaded|interactive/.test(document.readyState)
+        &&
+        document.body
+    ) {
+        callback();
+    } else {
+        document.addEventListener('DOMContentLoaded', function () {
+            callback();
+        }, false);
+    }
+
+    return this;
+}
+
 function getClass(el) {
     return el.getAttribute && el.getAttribute('class') || '';
 }
@@ -104,6 +122,7 @@ function toggleClass(cls) {
 }
 
 export default {
+    ready,
     addClass,
     removeClass,
     hasClass,

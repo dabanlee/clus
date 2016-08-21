@@ -3,7 +3,7 @@
 //
 
 import extend from './extend.js';
-import { find, merge, trim } from './utils.js';
+import { find, merge, trim, type } from './utils.js';
 import search from './search.js';
 import DOM from './dom.js';
 
@@ -26,6 +26,7 @@ Clus.extend({
     find,
     merge,
     trim,
+    type,
 });
 
 // ====================================
