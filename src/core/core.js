@@ -3,7 +3,8 @@
 //
 
 import extend from './extend.js';
-import { merge } from './utils.js';
+import { merge, trim } from './utils.js';
+import DOM from './dom.js';
 
 export default function Clus(selector, context) {
     return new Clus.fn.init(selector, context);
@@ -18,10 +19,11 @@ Clus.extend = Clus.fn.extend = extend;
 
 Clus.extend({
     merge,
+    trim,
 });
 
 // ============
-// extend selector 
+// extend selector
 // ============
 
 Clus.fn.extend({
@@ -57,5 +59,10 @@ Clus.fn.extend({
         return this.eq(-1);
     },
 });
+
+// ============
+// extend DOM methods
+// ============
+Clus.fn.extend(DOM);
 
 window.Clus = window.C = window.$$ = Clus;

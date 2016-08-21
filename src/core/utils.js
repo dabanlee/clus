@@ -2,6 +2,11 @@
 // utils.js
 //
 
+export function trim(text) {
+    const rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+    return text == null ? '' : `${text}`.replace(rtrim, '');
+}
+
 export function type(object) {
     let class2type = {},
         type = class2type.toString.call(object),

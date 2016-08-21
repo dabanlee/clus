@@ -14,6 +14,11 @@
   // utils.js
   //
 
+  function trim(text) {
+      var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+      return text == null ? '' : ('' + text).replace(rtrim, '');
+  }
+
   function type(object) {
       var class2type = {},
           type = class2type.toString.call(object),
@@ -132,26 +137,144 @@
       return target;
   }
 
-  function Clus(selector, context) {
-      return new Clus.fn.init(selector, context);
+  //
+  // classes.js
+  //
+
+  var rnotwhite = /\S+/g;
+  var rclass = /[\t\r\n\f]/g;
+
+  function getClass(el) {
+      return el.getAttribute && el.getAttribute('class') || '';
   }
 
-  Clus.fn = Clus.prototype = {
-      contructor: Clus,
+  var DOM = {
+      addClass: function addClass(cls) {
+          var classes = void 0,
+              clazz = void 0,
+              el = void 0,
+              cur = void 0,
+              curValue = void 0,
+              finalValue = void 0,
+              j = void 0,
+              i = 0;
+
+          if (typeof cls === 'string' && cls) {
+              classes = cls.match(rnotwhite) || [];
+
+              while (el = this[i++]) {
+                  curValue = getClass(el);
+                  cur = el.nodeType === 1 && (' ' + curValue + ' ').replace(rclass, ' ');
+
+                  if (cur) {
+                      j = 0;
+
+                      while (clazz = classes[j++]) {
+                          // to determine whether the class that to add has already existed
+                          if (cur.indexOf(' ' + clazz + ' ') == -1) {
+                              cur += clazz + ' ';
+                          }
+                          finalValue = Clus.trim(cur);
+                          if (curValue !== finalValue) {
+                              el.setAttribute('class', finalValue);
+                          }
+                      }
+                  }
+              }
+          }
+
+          return this;
+      },
+      removeClass: function removeClass(cls) {
+          var classes = void 0,
+              clazz = void 0,
+              el = void 0,
+              cur = void 0,
+              curValue = void 0,
+              finalValue = void 0,
+              j = void 0,
+              i = 0;
+
+          if (!arguments.length) {
+              return;
+          }
+
+          if (typeof cls === 'string' && cls) {
+              classes = cls.match(rnotwhite) || [];
+
+              while (el = this[i++]) {
+                  curValue = getClass(el);
+                  cur = el.nodeType === 1 && (' ' + curValue + ' ').replace(rclass, ' ');
+
+                  if (cur) {
+                      j = 0;
+
+                      while (clazz = classes[j++]) {
+                          // to determine whether the class that to add has already existed
+                          if (cur.indexOf(' ' + clazz + ' ') !== -1) {
+                              cur = cur.replace(' ' + clazz + ' ', ' ');
+                          }
+                          finalValue = Clus.trim(cur);
+                          if (curValue !== finalValue) {
+                              el.setAttribute('class', finalValue);
+                          }
+                      }
+                  }
+              }
+          }
+
+          return this;
+      },
+      hasClass: function hasClass(cls) {
+          var el = void 0,
+              i = 0,
+              className = ' ' + cls + ' ';
+
+          while (el = this[i++]) {
+              if (el.nodeType === 1 && (' ' + getClass(el) + ' ').replace(rclass, ' ').indexOf(className) !== -1) {
+                  return true;
+              }
+          }
+
+          return false;
+      },
+      toggleClass: function toggleClass(cls) {
+          var el = void 0,
+              i = 0;
+
+          while (el = this[i++]) {
+              if (this.hasClass(cls)) {
+                  this.removeClass(cls);
+                  return this;
+              } else {
+                  this.addClass(cls);
+                  return this;
+              }
+          }
+      }
+  };
+
+  function Clus$1(selector, context) {
+      return new Clus$1.fn.init(selector, context);
+  }
+
+  Clus$1.fn = Clus$1.prototype = {
+      contructor: Clus$1,
       length: 0
   };
 
-  Clus.extend = Clus.fn.extend = extend;
+  Clus$1.extend = Clus$1.fn.extend = extend;
 
-  Clus.extend({
-      merge: merge
+  Clus$1.extend({
+      merge: merge,
+      trim: trim
   });
 
   // ============
-  // extend selector 
+  // extend selector
   // ============
 
-  Clus.fn.extend({
+  Clus$1.fn.extend({
       pushStack: function pushStack(els) {
           var ret = merge(this.contructor(), els);
           ret.prevObject = this;
@@ -164,7 +287,7 @@
               ret = this.pushStack([]);
 
           for (; i < len; i++) {
-              Clus.find(selector, self[i], ret);
+              Clus$1.find(selector, self[i], ret);
           }
 
           return ret;
@@ -185,7 +308,12 @@
       }
   });
 
-  window.Clus = window.C = window.$$ = Clus;
+  // ============
+  // extend DOM methods
+  // ============
+  Clus$1.fn.extend(DOM);
+
+  window.Clus = window.C = window.$$ = Clus$1;
 
   //
   // init.js
@@ -2327,8 +2455,8 @@
       Clus.find = Sizzle;
   }
 
-  init(Clus);
-  initSizzle(Clus);
+  init(Clus$1);
+  initSizzle(Clus$1);
 
 }));
 //# sourceMappingURL=clus.js.map
