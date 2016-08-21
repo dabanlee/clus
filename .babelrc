@@ -1,4 +1,3 @@
 {
-    "plugins": ["transform-class-properties", "transform-flow-strip-types", "syntax-flow"],
     "presets": ["es2015-rollup"]
 }

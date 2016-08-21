@@ -9,8 +9,7 @@
     "roll:watch": "rollup -w -c rollup.config.dev.js",
     "roll:dev": "rollup -c rollup.config.dev.js",
     "roll:prod": "rollup -c rollup.config.prod.js",
-    "lint": "eslint src",
-    "flow": "flow status"
+    "lint": "eslint src"
   },
   "repository": {
     "type": "git",
@@ -30,12 +29,8 @@
   "homepage": "https://github.com/JustClear/clus",
   "devDependencies": {
     "babel-eslint": "^6.1.0",
-    "babel-plugin-syntax-flow": "^6.8.0",
-    "babel-plugin-transform-class-properties": "^6.10.2",
-    "babel-plugin-transform-flow-strip-types": "^6.8.0",
     "babel-preset-es2015-rollup": "^1.1.1",
     "eslint": "^3.3.1",
-    "flow-bin": "^0.27.0",
     "rollup": "^0.33.2",
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-json": "^2.0.1",
