@@ -1,4 +1,3 @@
-import json from 'rollup-plugin-json';
 import babel from 'rollup-plugin-babel';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import uglify from 'rollup-plugin-uglify';
@@ -12,7 +11,6 @@ export default {
     dest: `${paths.dist.root}${config.fileName}.min.js`,
     sourceMap: true,
     plugins: [
-        json(),
         babel(),
         sourcemaps(),
         uglify(),

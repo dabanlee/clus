@@ -1,4 +1,3 @@
-import json from 'rollup-plugin-json';
 import babel from 'rollup-plugin-babel';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import config, { paths } from './rollup.config';
@@ -11,7 +10,6 @@ export default {
     dest: `${paths.dist.root}${config.fileName}.js`,
     sourceMap: true,
     plugins: [
-        json(),
         babel(),
         sourcemaps(),
     ],
