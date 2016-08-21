@@ -141,6 +141,52 @@
       return target;
   }
 
+  function pushStack(els) {
+      var ret = merge(this.contructor(), els);
+      ret.prevObject = this;
+      return ret;
+  }
+
+  function find$1(selector) {
+      var i = 0,
+          len = this.length,
+          self = this,
+          ret = this.pushStack([]);
+
+      for (; i < len; i++) {
+          Clus.find(selector, self[i], ret);
+      }
+
+      return ret;
+  }
+
+  function end() {
+      return this.prevObject || this.constructor();
+  }
+
+  function eq(i) {
+      var len = this.length,
+          j = +i + (i < 0 ? len : 0); // reverse find
+      return this.pushStack(j >= 0 && j < len ? [this[j]] : []);
+  }
+
+  function first() {
+      return this.eq(0);
+  }
+
+  function last() {
+      return this.eq(-1);
+  }
+
+  var search = {
+      pushStack: pushStack,
+      find: find$1,
+      end: end,
+      eq: eq,
+      first: first,
+      last: last
+  };
+
   //
   // classes.js
   //
@@ -269,53 +315,25 @@
 
   Clus$1.extend = Clus$1.fn.extend = extend;
 
+  // ====================================
+  // extend Clus methods
+  // ====================================
+
   Clus$1.extend({
       find: find,
       merge: merge,
       trim: trim
   });
 
-  // ============
+  // ====================================
   // extend selector
-  // ============
+  // ====================================
 
-  Clus$1.fn.extend({
-      pushStack: function pushStack(els) {
-          var ret = merge(this.contructor(), els);
-          ret.prevObject = this;
-          return ret;
-      },
-      find: function find(selector) {
-          var i = 0,
-              len = this.length,
-              self = this,
-              ret = this.pushStack([]);
+  Clus$1.fn.extend(search);
 
-          for (; i < len; i++) {
-              Clus$1.find(selector, self[i], ret);
-          }
-
-          return ret;
-      },
-      end: function end() {
-          return this.prevObject || this.constructor();
-      },
-      eq: function eq(i) {
-          var len = this.length,
-              j = +i + (i < 0 ? len : 0); // reverse find
-          return this.pushStack(j >= 0 && j < len ? [this[j]] : []);
-      },
-      first: function first() {
-          return this.eq(0);
-      },
-      last: function last() {
-          return this.eq(-1);
-      }
-  });
-
-  // ============
+  // ====================================
   // extend DOM methods
-  // ============
+  // ====================================
   Clus$1.fn.extend(DOM);
 
   window.Clus = window.C = window.$$ = Clus$1;
