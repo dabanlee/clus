@@ -3,18 +3,24 @@
 [![dependencies](https://david-dm.org/justclear/clus.svg)](https://david-dm.org/justclear/clus#info=dependencies&view=table)
 [![devDependencies](https://david-dm.org/justclear/clus/dev-status.svg)](https://david-dm.org/justclear/clus#info=devDependencies&view=table)
 
-## usage
+## Emoji Commit
 
-```JavaScript
-// add class
-C('body').addClass('body');
+Commit Type             | Emoji
+----------------------- | -------------
+Initial Commit          | :tada: `:tada:`
+Structure               | :art: `:art:`
+Documentation           | :memo: `:memo:`
+New Idea                | :bulb: `:bulb:`
+New Feature             | :sparkles: `:sparkles:`
+Bug                     | :bug: `:bug:`
+Version Tag             | :bookmark: `:bookmark:`
+Performance             | :racehorse: `:racehorse:`
+Tooling                 | :wrench: `:wrench:`
+Tests                   | :rotating_light: `:rotating_light:`
+Deprecation             | :poop: `:poop:`
+Work In Progress (WIP)  | :construction: `:construction:`
+Upgrading               | :arrow_up: `:arrow_up:`
 
-// remove class
-C('body').removeClass('body');
+Example:
 
-// has class
-C('body').hasClass('body');
-
-// toggle class
-C('body').toggleClass('body');
-```
+> ":lipstick: fixing coding standard"
