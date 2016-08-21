@@ -3,7 +3,7 @@
 //
 
 import extend from './extend.js';
-import { merge, trim } from './utils.js';
+import { find, merge, trim } from './utils.js';
 import DOM from './dom.js';
 
 export default function Clus(selector, context) {
@@ -18,6 +18,7 @@ Clus.fn = Clus.prototype = {
 Clus.extend = Clus.fn.extend = extend;
 
 Clus.extend({
+    find,
     merge,
     trim,
 });

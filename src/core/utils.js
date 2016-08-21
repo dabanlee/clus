@@ -2,6 +2,10 @@
 // utils.js
 //
 
+export function find(selector) {
+    return document.querySelectorAll(selector);
+}
+
 export function trim(text) {
     const rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
     return text == null ? '' : `${text}`.replace(rtrim, '');
