@@ -12,19 +12,18 @@ function pushStack(els) {
 
 function find(selector) {
     let i = 0,
-        len = this.length,
-        self = this,
+        el,
         ret = this.pushStack([]);
 
-    for (; i < len; i++) {
-        Clus.find(selector, self[ i ], ret);
+    while((el = this[i++])) {
+        ret = merge(ret, el.querySelectorAll(selector));
     }
 
     return ret;
 }
 
 function end() {
-    return this.prevObject || this.constructor();
+    return this.prevObject || this.contructor();
 }
 
 function eq(i) {
