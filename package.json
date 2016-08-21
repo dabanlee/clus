@@ -4,11 +4,11 @@
   "description": "A minimalist jQuery-like JavaScript library for modern browsers.",
   "main": "dist/clus.js",
   "scripts": {
-    "build": "rm -rf dist && npm run roll:dev",
-    "publish": "rm -rf dist && npm run roll:dev && npm run roll:prod",
-    "roll:watch": "rollup -w -c rollup.config.dev.js",
-    "roll:dev": "rollup -c rollup.config.dev.js",
-    "roll:prod": "rollup -c rollup.config.prod.js",
+    "build": "rm -rf dist && npm run dev",
+    "publish": "rm -rf dist && npm run dev && npm run prod",
+    "watch": "rollup -w -c rollup.config.dev.js",
+    "dev": "rollup -c rollup.config.dev.js",
+    "prod": "rollup -c rollup.config.prod.js",
     "lint": "eslint src"
   },
   "repository": {
