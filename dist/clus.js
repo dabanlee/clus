@@ -346,6 +346,9 @@
       Clus.fn.init = function (selector, context, root) {
           if (!selector) {
               return;
+          } else if (selector === document) {
+              Clus.merge(this, [document]);
+              return this;
           } else {
               var els = Clus.find(selector);
               if (els.length) {
