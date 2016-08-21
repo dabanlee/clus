@@ -198,110 +198,118 @@
       return el.getAttribute && el.getAttribute('class') || '';
   }
 
-  var DOM = {
-      addClass: function addClass(cls) {
-          var classes = void 0,
-              clazz = void 0,
-              el = void 0,
-              cur = void 0,
-              curValue = void 0,
-              finalValue = void 0,
-              j = void 0,
-              i = 0;
+  function addClass(cls) {
+      var classes = void 0,
+          clazz = void 0,
+          el = void 0,
+          cur = void 0,
+          curValue = void 0,
+          finalValue = void 0,
+          j = void 0,
+          i = 0;
 
-          if (typeof cls === 'string' && cls) {
-              classes = cls.match(rnotwhite) || [];
-
-              while (el = this[i++]) {
-                  curValue = getClass(el);
-                  cur = el.nodeType === 1 && (' ' + curValue + ' ').replace(rclass, ' ');
-
-                  if (cur) {
-                      j = 0;
-
-                      while (clazz = classes[j++]) {
-                          // to determine whether the class that to add has already existed
-                          if (cur.indexOf(' ' + clazz + ' ') == -1) {
-                              cur += clazz + ' ';
-                          }
-                          finalValue = Clus.trim(cur);
-                          if (curValue !== finalValue) {
-                              el.setAttribute('class', finalValue);
-                          }
-                      }
-                  }
-              }
-          }
-
-          return this;
-      },
-      removeClass: function removeClass(cls) {
-          var classes = void 0,
-              clazz = void 0,
-              el = void 0,
-              cur = void 0,
-              curValue = void 0,
-              finalValue = void 0,
-              j = void 0,
-              i = 0;
-
-          if (!arguments.length) {
-              return;
-          }
-
-          if (typeof cls === 'string' && cls) {
-              classes = cls.match(rnotwhite) || [];
-
-              while (el = this[i++]) {
-                  curValue = getClass(el);
-                  cur = el.nodeType === 1 && (' ' + curValue + ' ').replace(rclass, ' ');
-
-                  if (cur) {
-                      j = 0;
-
-                      while (clazz = classes[j++]) {
-                          // to determine whether the class that to add has already existed
-                          if (cur.indexOf(' ' + clazz + ' ') !== -1) {
-                              cur = cur.replace(' ' + clazz + ' ', ' ');
-                          }
-                          finalValue = Clus.trim(cur);
-                          if (curValue !== finalValue) {
-                              el.setAttribute('class', finalValue);
-                          }
-                      }
-                  }
-              }
-          }
-
-          return this;
-      },
-      hasClass: function hasClass(cls) {
-          var el = void 0,
-              i = 0,
-              className = ' ' + cls + ' ';
+      if (typeof cls === 'string' && cls) {
+          classes = cls.match(rnotwhite) || [];
 
           while (el = this[i++]) {
-              if (el.nodeType === 1 && (' ' + getClass(el) + ' ').replace(rclass, ' ').indexOf(className) !== -1) {
-                  return true;
-              }
-          }
+              curValue = getClass(el);
+              cur = el.nodeType === 1 && (' ' + curValue + ' ').replace(rclass, ' ');
 
-          return false;
-      },
-      toggleClass: function toggleClass(cls) {
-          var el = void 0,
-              i = 0;
+              if (cur) {
+                  j = 0;
 
-          while (el = this[i++]) {
-              if (this.hasClass(cls)) {
-                  this.removeClass(cls);
-                  return this;
-              } else {
-                  this.addClass(cls);
-                  return this;
+                  while (clazz = classes[j++]) {
+                      // to determine whether the class that to add has already existed
+                      if (cur.indexOf(' ' + clazz + ' ') == -1) {
+                          cur += clazz + ' ';
+                      }
+                      finalValue = Clus.trim(cur);
+                      if (curValue !== finalValue) {
+                          el.setAttribute('class', finalValue);
+                      }
+                  }
               }
           }
       }
+
+      return this;
+  }
+
+  function removeClass(cls) {
+      var classes = void 0,
+          clazz = void 0,
+          el = void 0,
+          cur = void 0,
+          curValue = void 0,
+          finalValue = void 0,
+          j = void 0,
+          i = 0;
+
+      if (!arguments.length) {
+          return;
+      }
+
+      if (typeof cls === 'string' && cls) {
+          classes = cls.match(rnotwhite) || [];
+
+          while (el = this[i++]) {
+              curValue = getClass(el);
+              cur = el.nodeType === 1 && (' ' + curValue + ' ').replace(rclass, ' ');
+
+              if (cur) {
+                  j = 0;
+
+                  while (clazz = classes[j++]) {
+                      // to determine whether the class that to add has already existed
+                      if (cur.indexOf(' ' + clazz + ' ') !== -1) {
+                          cur = cur.replace(' ' + clazz + ' ', ' ');
+                      }
+                      finalValue = Clus.trim(cur);
+                      if (curValue !== finalValue) {
+                          el.setAttribute('class', finalValue);
+                      }
+                  }
+              }
+          }
+      }
+
+      return this;
+  }
+
+  function hasClass(cls) {
+      var el = void 0,
+          i = 0,
+          className = ' ' + cls + ' ';
+
+      while (el = this[i++]) {
+          if (el.nodeType === 1 && (' ' + getClass(el) + ' ').replace(rclass, ' ').indexOf(className) !== -1) {
+              return true;
+          }
+      }
+
+      return false;
+  }
+
+  function toggleClass(cls) {
+      var el = void 0,
+          i = 0;
+
+      while (el = this[i++]) {
+          if (this.hasClass(cls)) {
+              this.removeClass(cls);
+              return this;
+          } else {
+              this.addClass(cls);
+              return this;
+          }
+      }
+  }
+
+  var DOM = {
+      addClass: addClass,
+      removeClass: removeClass,
+      hasClass: hasClass,
+      toggleClass: toggleClass
   };
 
   function Clus$1(selector, context) {
@@ -336,7 +344,7 @@
   // ====================================
   Clus$1.fn.extend(DOM);
 
-  window.Clus = window.C = window.$$ = Clus$1;
+  window.Clus = window.C = window.$ = Clus$1;
 
   //
   // init.js

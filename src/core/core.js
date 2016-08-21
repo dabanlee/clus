@@ -39,4 +39,4 @@ Clus.fn.extend(search);
 // ====================================
 Clus.fn.extend(DOM);
 
-window.Clus = window.C = window.$$ = Clus;
+window.Clus = window.C = window.$ = Clus;
