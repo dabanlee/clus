@@ -1,6 +1,6 @@
 {
   "name": "clus",
-  "description": "dom class helper.",
+  "description": "A minimalist jQuery-like JavaScript library for modern browsers.",
   "main": "src/index.js",
   "authors": [
     "JustClear"
@@ -12,7 +12,7 @@
     "class",
     "dom"
   ],
-  "homepage": "https://github.com/JustClear/chus",
+  "homepage": "https://github.com/JustClear/clus",
   "ignore": [
     "**/.*",
     ".*",
