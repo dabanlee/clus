@@ -3,7 +3,7 @@
 //
 
 export default function init(Clus) {
-    Clus.fn.init = function (selector, context, root) {
+    Clus.fn.init = function (selector, context) {
         if (!selector) {
             return;
         } else if (Clus.type(selector) === 'function') {

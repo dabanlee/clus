@@ -47,4 +47,4 @@ export default {
     eq,
     first,
     last,
-}
+};
