@@ -5,8 +5,8 @@
 import extend from './extend.js';
 import { find, merge, trim, type } from './utils.js';
 import search from './search.js';
-import DOM from './dom.js';
-import parseHTML from './parseHTML.js';
+import DOM from './dom/index.js';
+import parseHTML from './dom/parseHTML.js';
 
 export default function Clus(selector, context) {
     return new Clus.fn.init(selector, context);

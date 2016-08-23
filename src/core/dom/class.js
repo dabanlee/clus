@@ -5,29 +5,11 @@
 const rnotwhite = /\S+/g;
 const rclass = /[\t\r\n\f]/g;
 
-function ready(callback) {
-    if (
-        document
-        &&
-        /complete|loaded|interactive/.test(document.readyState)
-        &&
-        document.body
-    ) {
-        callback();
-    } else {
-        document.addEventListener('DOMContentLoaded', function () {
-            callback();
-        }, false);
-    }
-
-    return this;
-}
-
-function getClass(el) {
+export function getClass(el) {
     return el.getAttribute && el.getAttribute('class') || '';
 }
 
-function addClass(cls) {
+export function addClass(cls) {
     let classes, clazz, el, cur, curValue, finalValue, j, i = 0;
 
     if (typeof cls === 'string' && cls) {
@@ -57,7 +39,7 @@ function addClass(cls) {
     return this;
 }
 
-function removeClass(cls) {
+export function removeClass(cls) {
     let classes, clazz, el, cur, curValue, finalValue, j, i = 0;
 
     if (!arguments.length) {
@@ -91,7 +73,7 @@ function removeClass(cls) {
     return this;
 }
 
-function hasClass(cls) {
+export function hasClass(cls) {
     let el, i = 0, className = ` ${cls} `;
 
     while((el = this[i++])) {
@@ -107,7 +89,7 @@ function hasClass(cls) {
     return false;
 }
 
-function toggleClass(cls) {
+export function toggleClass(cls) {
     let el, i = 0;
 
     while((el = this[i++])) {
@@ -122,7 +104,6 @@ function toggleClass(cls) {
 }
 
 export default {
-    ready,
     addClass,
     removeClass,
     hasClass,

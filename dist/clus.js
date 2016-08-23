@@ -195,11 +195,8 @@ var search = {
 };
 
 //
-// classes.js
+// ready.js
 //
-
-var rnotwhite = /\S+/g;
-var rclass = /[\t\r\n\f]/g;
 
 function ready(callback) {
     if (document && /complete|loaded|interactive/.test(document.readyState) && document.body) {
@@ -212,6 +209,13 @@ function ready(callback) {
 
     return this;
 }
+
+//
+// classes.js
+//
+
+var rnotwhite = /\S+/g;
+var rclass = /[\t\r\n\f]/g;
 
 function getClass(el) {
     return el.getAttribute && el.getAttribute('class') || '';
@@ -323,6 +327,10 @@ function toggleClass(cls) {
         }
     }
 }
+
+//
+// Element Extend
+//
 
 var DOM = {
     ready: ready,
