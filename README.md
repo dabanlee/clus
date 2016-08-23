@@ -23,7 +23,7 @@ Upgrading               | :arrow_up: `:arrow_up:`
 
 Example:
 
-> ":lipstick: fixing coding standard"
+> ":art: fixing coding standard"
 
 ## Usage
 
