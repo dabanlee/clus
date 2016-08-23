@@ -26,4 +26,6 @@ export function append(DOMString) {
             el.appendChild(fregment);
         });
     }
+
+    return this;
 }

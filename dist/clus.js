@@ -229,10 +229,10 @@ function appendTo(selector) {
     }
 }
 
-function append(selector) {
+function append(DOMString) {
     var el = void 0,
         i = 0,
-        fregmentCollection = Clus.parseHTML(selector),
+        fregmentCollection = Clus.parseHTML(DOMString),
         fregments = Array.prototype.slice.apply(fregmentCollection);
 
     while (el = this[i++]) {
@@ -240,6 +240,8 @@ function append(selector) {
             el.appendChild(fregment);
         });
     }
+
+    return this;
 }
 
 //
