@@ -1,6 +1,6 @@
 {
   "name": "clus",
-  "description": "A minimalist jQuery-like JavaScript library for modern browsers.",
+  "description": "A minimalist JavaScript library to modify DOM element for modern browsers.",
   "main": "src/index.js",
   "authors": [
     "JustClear"
