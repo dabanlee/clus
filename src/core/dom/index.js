@@ -3,6 +3,7 @@
 //
 
 import ready from './ready.js';
+import { append, appendTo } from './append.js';
 import {
     addClass,
     removeClass,
@@ -12,6 +13,8 @@ import {
 
 export default {
     ready,
+    append,
+    appendTo,
     addClass,
     removeClass,
     hasClass,

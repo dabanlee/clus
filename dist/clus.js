@@ -211,6 +211,38 @@ function ready(callback) {
 }
 
 //
+// append.js
+//
+
+function appendTo(selector) {
+    var fregment = void 0,
+        i = 0,
+        elCollection = Clus.find(selector),
+        els = Array.prototype.slice.apply(elCollection);
+
+    while (fregment = this[i++]) {
+        console.log(fregment);
+        els.map(function (el) {
+            console.log(el);
+            el.appendChild(fregment);
+        });
+    }
+}
+
+function append(selector) {
+    var el = void 0,
+        i = 0,
+        fregmentCollection = Clus.parseHTML(selector),
+        fregments = Array.prototype.slice.apply(fregmentCollection);
+
+    while (el = this[i++]) {
+        fregments.map(function (fregment) {
+            el.appendChild(fregment);
+        });
+    }
+}
+
+//
 // classes.js
 //
 
@@ -334,6 +366,8 @@ function toggleClass(cls) {
 
 var DOM = {
     ready: ready,
+    append: append,
+    appendTo: appendTo,
     addClass: addClass,
     removeClass: removeClass,
     hasClass: hasClass,
