@@ -29,11 +29,11 @@ Example:
 
 ### Instance methods
 
-- `<a href="#ready">ready()</a>`
-- `<a href="#add-class">addClass</a>`
-- `<a href="#remove-class">removeClass</a>`
-- `<a href="#has-class">hasClass</a>`
-- `<a href="#toggle-class">toggleClass</a>`
+- <a href="#ready">`.ready()`</a>
+- <a href="#add-class">`.addClass()`</a>
+- <a href="#remove-class">`.removeClass()`</a>
+- <a href="#has-class">`.hasClass()`</a>
+- <a href="#toggle-class">`.toggleClass()`</a>
 
 ### DOM
 
