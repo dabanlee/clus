@@ -27,8 +27,17 @@ Example:
 
 ## Usage
 
+### Instance methods
+
+- `<a href="#ready">ready()</a>`
+- `<a href="#add-class">addClass</a>`
+- `<a href="#remove-class">removeClass</a>`
+- `<a href="#has-class">hasClass</a>`
+- `<a href="#toggle-class">toggleClass</a>`
+
 ### DOM
 
+<a name="ready"></a>
 #### `$(document).ready()`
 
 ```js
@@ -43,6 +52,7 @@ $(function () {
 });
 ```
 
+<a name="add-class"></a>
 #### `.addClass(clasNname)`
 
 Example:
@@ -67,6 +77,7 @@ Example:
 </html>
 ```
 
+<a name="remove-class"></a>
 #### `.removeClass(clasNname)`
 
 Example:
@@ -91,6 +102,7 @@ Example:
 </html>
 ```
 
+<a name="has-class"></a>
 #### `.hasClass(clasNname)`
 
 Example:
@@ -112,6 +124,7 @@ Example:
 </html>
 ```
 
+<a name="toggle-class"></a>
 #### `.toggleClass(clasNname)`
 
 Example:
