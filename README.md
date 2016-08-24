@@ -35,6 +35,9 @@ Example:
 - <a href="#has-class">`.hasClass()`</a>
 - <a href="#toggle-class">`.toggleClass()`</a>
 
+- <a href="#append">`.append()`</a>
+- <a href="#append-to">`.appendTo()`</a>
+
 ### DOM
 
 <a name="ready"></a>
@@ -93,4 +96,22 @@ Example:
 
 ```js
 $('p').toggleClass('hello');
+```
+
+<a name="append"></a>
+#### `.append(DOMString)`
+
+Example:
+
+```js
+$('body').append('<h1>Hello Clus</h1>');
+```
+
+<a name="append-to"></a>
+#### `.appendTo(selector)`
+
+Example:
+
+```js
+$('<h1>Hello Clus</h1>').appendTo('body');
 ```
