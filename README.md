@@ -57,24 +57,11 @@ $(function () {
 
 Example:
 
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Clus</title>
-    <script src="/path/to/clus.min.js"></script>
-</head>
-<body>
-    <p class="hello"></p>
-    <p></p>
-    <script>
-    $('.hello').addClass('world');
-    $('p').addClass('hello world');
-    // or
-    $('p').addClass('hello').addClass('world');
-    </script>
-</body>
-</html>
+```js
+$('.hello').addClass('world');
+$('p').addClass('hello world');
+// or
+$('p').addClass('hello').addClass('world');
 ```
 
 <a name="remove-class"></a>
@@ -82,24 +69,11 @@ Example:
 
 Example:
 
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Clus</title>
-    <script src="/path/to/clus.min.js"></script>
-</head>
-<body>
-    <p class="hello world"></p>
-    <p></p>
-    <script>
-    $('.hello').removeClass('hello').addClass('hi');
-    $('p').addClass('hello world').removeClass('hello world');
-    // or
-    $('p').addClass('hello world').removeClass('hello').removeClass('world');
-    </script>
-</body>
-</html>
+```js
+$('.hello').removeClass('hello').addClass('hi');
+$('p').addClass('hello world').removeClass('hello world');
+// or
+$('p').addClass('hello world').removeClass('hello').removeClass('world');
 ```
 
 <a name="has-class"></a>
@@ -107,21 +81,9 @@ Example:
 
 Example:
 
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Clus</title>
-    <script src="/path/to/clus.min.js"></script>
-</head>
-<body>
-    <p class="hello"></p>
-    <script>
-    $('p').hasClass('hello'); // true
-    $('p').hasClass('world'); // false
-    </script>
-</body>
-</html>
+```js
+$('p').hasClass('hello'); // true
+$('p').hasClass('world'); // false
 ```
 
 <a name="toggle-class"></a>
@@ -129,18 +91,6 @@ Example:
 
 Example:
 
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Clus</title>
-    <script src="/path/to/clus.min.js"></script>
-</head>
-<body>
-    <p class="hello"></p>
-    <script>
-    $('p').toggleClass('hello');
-    </script>
-</body>
-</html>
+```js
+$('p').toggleClass('hello');
 ```
