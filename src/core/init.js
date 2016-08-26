@@ -2,30 +2,37 @@
 // init.js
 //
 
-export default function init(Clus) {
-    Clus.fn.init = function (selector, context) {
-        if (!selector) {
-            return;
-        } else if (Clus.type(selector) === 'function') {
-            return Clus(document).ready(selector);
-        } else if (selector === document) {
-            Clus.merge(this, [document]);
-            return this;
-        } else if (Clus.type(selector) === 'string') {
-            let fragmentRE = /^\s*<(\w+|!)[^>]*>/;
-            if (selector[0] === '<' && fragmentRE.test(selector)) {
-                let htmls = Clus.parseHTML(selector);
-                Clus.merge(this, htmls);
-                return this;
-            } else {
-                let els = Clus.find(selector);
-                if (els.length) {
-                    Clus.merge(this, els);
-                }
-                return this;
-            }
+export default function init(selector = '') {
+    let dom,
+        fragmentRE = /^\s*<(\w+|!)[^>]*>/,
+        selectorType = Clus.type(selector),
+        elementTypes = [1, 9, 11];
+
+    if (!selector) {
+        dom = [],
+        dom.selector = selector;
+    } else if (elementTypes.indexOf(selector.nodeType) !== -1 || selector === window) {
+        dom = [selector],
+        selector = null;
+    } else if (selectorType === 'function') {
+        return Clus(document).ready(selector);
+    } else if (selectorType === 'array') {
+        dom = selector;
+    } else if (selectorType === 'object') {
+        dom = [selector],
+        selector = null;
+    } else if (selectorType === 'string') {
+        if (selector[0] === '<' && fragmentRE.test(selector)) {
+            dom = Clus.parseHTML(selector),
+            selector = null;
+        } else {
+            dom = [].slice.call(document.querySelectorAll(selector));
         }
-        return this;
-    };
-    Clus.fn.init.prototype = Clus.fn;
+    }
+
+    dom = dom || [];
+    Clus.extend(dom, Clus.fn);
+    dom.selector = selector;
+
+    return dom;
 }

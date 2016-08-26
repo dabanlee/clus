@@ -2,20 +2,23 @@
 // Core.js
 //
 
-import extend from './extend.js';
 import { find, merge, trim, type } from './utils.js';
+import init from './init.js';
+import extend from './extend.js';
 import search from './search.js';
 import DOM from './dom/index.js';
 import parseHTML from './dom/parseHTML.js';
 
-export default function Clus(selector, context) {
-    return new Clus.fn.init(selector, context);
-}
+export default function Clus (selector) {
+    return new Clus.fn.init(selector);
+};
 
 Clus.fn = Clus.prototype = {
     contructor: Clus,
-    length: 0,
+    init,
 };
+
+Clus.fn.init.prototype = Clus.fn;
 
 Clus.extend = Clus.fn.extend = extend;
 

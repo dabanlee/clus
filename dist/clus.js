@@ -79,6 +79,43 @@ function merge(first, second) {
 }
 
 //
+// init.js
+//
+
+function init() {
+    var selector = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+
+    var dom = void 0,
+        fragmentRE = /^\s*<(\w+|!)[^>]*>/,
+        selectorType = Clus.type(selector),
+        elementTypes = [1, 9, 11];
+
+    if (!selector) {
+        dom = [], dom.selector = selector;
+    } else if (elementTypes.indexOf(selector.nodeType) !== -1 || selector === window) {
+        dom = [selector], selector = null;
+    } else if (selectorType === 'function') {
+        return Clus(document).ready(selector);
+    } else if (selectorType === 'array') {
+        dom = selector;
+    } else if (selectorType === 'object') {
+        dom = [selector], selector = null;
+    } else if (selectorType === 'string') {
+        if (selector[0] === '<' && fragmentRE.test(selector)) {
+            dom = Clus.parseHTML(selector), selector = null;
+        } else {
+            dom = [].slice.call(document.querySelectorAll(selector));
+        }
+    }
+
+    dom = dom || [];
+    Clus.extend(dom, Clus.fn);
+    dom.selector = selector;
+
+    return dom;
+}
+
+//
 // extend.js
 //
 
@@ -390,14 +427,16 @@ function parseHTML(DOMString) {
 // Core.js
 //
 
-function Clus$1(selector, context) {
-    return new Clus$1.fn.init(selector, context);
-}
+function Clus$1(selector) {
+    return new Clus$1.fn.init(selector);
+};
 
 Clus$1.fn = Clus$1.prototype = {
     contructor: Clus$1,
-    length: 0
+    init: init
 };
+
+Clus$1.fn.init.prototype = Clus$1.fn;
 
 Clus$1.extend = Clus$1.fn.extend = extend;
 
@@ -426,41 +465,7 @@ Clus$1.fn.extend(DOM);
 
 window.Clus = window.C = window.$ = Clus$1;
 
-//
-// init.js
-//
-
-function init(Clus) {
-    Clus.fn.init = function (selector, context) {
-        if (!selector) {
-            return;
-        } else if (Clus.type(selector) === 'function') {
-            return Clus(document).ready(selector);
-        } else if (selector === document) {
-            Clus.merge(this, [document]);
-            return this;
-        } else if (Clus.type(selector) === 'string') {
-            var fragmentRE = /^\s*<(\w+|!)[^>]*>/;
-            if (selector[0] === '<' && fragmentRE.test(selector)) {
-                var htmls = Clus.parseHTML(selector);
-                Clus.merge(this, htmls);
-                return this;
-            } else {
-                var els = Clus.find(selector);
-                if (els.length) {
-                    Clus.merge(this, els);
-                }
-                return this;
-            }
-        }
-        return this;
-    };
-    Clus.fn.init.prototype = Clus.fn;
-}
-
 // @flow
-
-init(Clus$1);
 
 })));
 //# sourceMappingURL=clus.js.map
