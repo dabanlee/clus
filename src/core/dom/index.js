@@ -9,7 +9,7 @@ import {
     removeClass,
     hasClass,
     toggleClass,
-} from './class.js'
+} from './class.js';
 
 export default {
     ready,

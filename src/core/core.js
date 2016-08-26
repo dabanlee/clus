@@ -11,7 +11,7 @@ import parseHTML from './dom/parseHTML.js';
 
 export default function Clus (selector) {
     return new Clus.fn.init(selector);
-};
+}
 
 Clus.fn = Clus.prototype = {
     contructor: Clus,

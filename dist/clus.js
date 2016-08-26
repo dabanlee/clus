@@ -429,7 +429,7 @@ function parseHTML(DOMString) {
 
 function Clus$1(selector) {
     return new Clus$1.fn.init(selector);
-};
+}
 
 Clus$1.fn = Clus$1.prototype = {
     contructor: Clus$1,
