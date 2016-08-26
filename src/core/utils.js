@@ -2,7 +2,7 @@
 // utils.js
 //
 
-export function find(selector) {
+export function rootQuery(selector) {
     return document.querySelectorAll(selector);
 }
 

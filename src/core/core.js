@@ -2,7 +2,7 @@
 // Core.js
 //
 
-import { find, merge, trim, type } from './utils.js';
+import { rootQuery, merge, trim, type } from './utils.js';
 import init from './init.js';
 import extend from './extend.js';
 import search from './search.js';
@@ -27,7 +27,7 @@ Clus.extend = Clus.fn.extend = extend;
 // ====================================
 
 Clus.extend({
-    find,
+    find: rootQuery,
     merge,
     trim,
     type,

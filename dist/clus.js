@@ -14,7 +14,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 // utils.js
 //
 
-function find(selector) {
+function rootQuery(selector) {
     return document.querySelectorAll(selector);
 }
 
@@ -192,7 +192,7 @@ function pushStack(els) {
     return ret;
 }
 
-function find$1(selector) {
+function find(selector) {
     var i = 0,
         el = void 0,
         ret = this.pushStack([]);
@@ -224,7 +224,7 @@ function last() {
 
 var search = {
     pushStack: pushStack,
-    find: find$1,
+    find: find,
     end: end,
     eq: eq,
     first: first,
@@ -445,7 +445,7 @@ Clus$1.extend = Clus$1.fn.extend = extend;
 // ====================================
 
 Clus$1.extend({
-    find: find,
+    find: rootQuery,
     merge: merge,
     trim: trim,
     type: type,
