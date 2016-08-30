@@ -4,6 +4,7 @@
   "description": "A minimalist JavaScript library to modify DOM element for modern browsers.",
   "main": "dist/clus.js",
   "scripts": {
+    "test": "mocha-phantomjs test/index.html",
     "build": "rm -rf dist && npm run dev",
     "publish": "rm -rf dist && npm run dev && npm run prod",
     "watch": "rollup -w -c rollup.config.dev.js",
@@ -31,6 +32,9 @@
     "babel-eslint": "^6.1.0",
     "babel-preset-es2015-rollup": "^1.1.1",
     "eslint": "^3.3.1",
+    "expect.js": "^0.3.1",
+    "mocha": "^3.0.2",
+    "mocha-phantomjs": "^4.1.0",
     "rollup": "^0.34.10",
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-sourcemaps": "^0.3.4",
