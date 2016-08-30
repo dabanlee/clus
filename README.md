@@ -34,7 +34,6 @@ Example:
 - <a href="#remove-class">`.removeClass()`</a>
 - <a href="#has-class">`.hasClass()`</a>
 - <a href="#toggle-class">`.toggleClass()`</a>
-
 - <a href="#append">`.append()`</a>
 - <a href="#append-to">`.appendTo()`</a>
 
