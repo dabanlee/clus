@@ -8,9 +8,7 @@ export function appendTo(selector) {
         els = Array.prototype.slice.apply(elCollection);
 
     while((fregment = this[i++])) {
-        console.log(fregment);
         els.map(el => {
-            console.log(el);
             el.appendChild(fregment);
         });
     }
