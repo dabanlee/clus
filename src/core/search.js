@@ -2,7 +2,7 @@
 // search.js
 //
 
-import { merge } from './utils.js';
+import { merge, unique } from './utils.js';
 
 function pushStack(els) {
     let ret = merge(this.contructor(), els);
@@ -40,6 +40,42 @@ function last() {
     return this.eq(-1);
 }
 
+function parent(selector) {
+    let parents = [], i = 0, len = this.length;
+    for (; i < len; i++) {
+        if (this[i].parentNode !== null) {
+            if (selector) {
+                if (Clus(this[i].parentNode).is(selector)) {
+                    parents.push(this[i].parentNode);
+                }
+            } else {
+                parents.push(this[i].parentNode);
+            }
+        }
+    }
+    parents = unique(parents)
+    return Clus(parents);
+}
+
+function parents(selector) {
+    let parent, parents = [], i = 0, len = this.length;
+    for (; i < len; i++) {
+        parent = this[i].parentNode;
+        while (parent) {
+            if (selector) {
+                if (Clus(parent).is(selector)) {
+                    parents.push(parent);
+                }
+            } else {
+                parents.push(parent);
+            }
+            parent = parent.parentNode;
+        }
+    }
+    parents = unique(parents);
+    return Clus(parents);
+}
+
 export default {
     pushStack,
     find,
@@ -47,4 +83,6 @@ export default {
     eq,
     first,
     last,
+    parent,
+    parents,
 };

@@ -78,6 +78,26 @@ function merge(first, second) {
     return first;
 }
 
+function unique(array) {
+    var unique = [],
+        i = 0,
+        len = array.length;
+    for (; i < len; i++) {
+        if (unique.indexOf(array[i]) === -1) {
+            unique.push(array[i]);
+        }
+    }
+    return unique;
+}
+
+function matches(element, selector) {
+    if (!selector || !element || element.nodeType !== 1) return false;
+
+    var matchesSelector = element.matchesSelector || element.webkitMatchesSelector || element.mozMatchesSelector || element.msMatchesSelector;
+
+    return matchesSelector.call(element, selector);
+}
+
 //
 // init.js
 //
@@ -222,13 +242,68 @@ function last() {
     return this.eq(-1);
 }
 
+function parent(selector) {
+    var parents = [],
+        i = 0,
+        len = this.length;
+    for (; i < len; i++) {
+        if (this[i].parentNode !== null) {
+            if (selector) {
+                if (Clus(this[i].parentNode).is(selector)) {
+                    parents.push(this[i].parentNode);
+                }
+            } else {
+                parents.push(this[i].parentNode);
+            }
+        }
+    }
+    parents = unique(parents);
+    return Clus(parents);
+}
+
+function parents(selector) {
+    var parent = void 0,
+        parents = [],
+        i = 0,
+        len = this.length;
+    for (; i < len; i++) {
+        parent = this[i].parentNode;
+        while (parent) {
+            if (selector) {
+                if (Clus(parent).is(selector)) {
+                    parents.push(parent);
+                }
+            } else {
+                parents.push(parent);
+            }
+            parent = parent.parentNode;
+        }
+    }
+    parents = unique(parents);
+    return Clus(parents);
+}
+
 var search = {
     pushStack: pushStack,
     find: find,
     end: end,
     eq: eq,
     first: first,
-    last: last
+    last: last,
+    parent: parent,
+    parents: parents
+};
+
+//
+// instance methods
+//
+
+function is(selector) {
+    return this.length > 0 && Clus.matches(this[0], selector);
+}
+
+var instance = {
+    is: is
 };
 
 //
@@ -447,8 +522,16 @@ Clus$1.extend({
     merge: merge,
     trim: trim,
     type: type,
-    parseHTML: parseHTML
+    parseHTML: parseHTML,
+    unique: unique,
+    matches: matches
 });
+
+// ====================================
+// extend instance methods
+// ====================================
+
+Clus$1.extend(instance);
 
 // ====================================
 // extend selector

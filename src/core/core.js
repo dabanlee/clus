@@ -2,10 +2,11 @@
 // Core.js
 //
 
-import { rootQuery, merge, trim, type } from './utils.js';
+import { rootQuery, merge, trim, type, unique, matches } from './utils.js';
 import init from './init.js';
 import extend from './extend.js';
 import search from './search.js';
+import instance from './instance.js';
 import DOM from './dom/index.js';
 import parseHTML from './dom/parseHTML.js';
 
@@ -32,7 +33,15 @@ Clus.extend({
     trim,
     type,
     parseHTML,
+    unique,
+    matches,
 });
+
+// ====================================
+// extend instance methods
+// ====================================
+
+Clus.extend(instance);
 
 // ====================================
 // extend selector

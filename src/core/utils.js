@@ -70,3 +70,21 @@ export function merge(first, second) {
 
 	return first;
 }
+
+export function unique(array) {
+    let unique = [], i = 0, len = array.length;
+    for (; i < len; i++) {
+        if (unique.indexOf(array[i]) === -1) {
+            unique.push(array[i]);
+        }
+    }
+    return unique;
+}
+
+export function matches(element, selector) {
+    if (!selector || !element || element.nodeType !== 1) return false;
+
+    let matchesSelector = element.matchesSelector || element.webkitMatchesSelector || element.mozMatchesSelector || element.msMatchesSelector;
+
+    return matchesSelector.call(element, selector);
+}
