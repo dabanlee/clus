@@ -5,6 +5,7 @@
 import { rootQuery, merge, trim, type, unique, matches } from './utils.js';
 import init from './init.js';
 import extend from './extend.js';
+import event from './event.js';
 import search from './search.js';
 import instance from './instance.js';
 import DOM from './dom/index.js';
@@ -41,7 +42,8 @@ Clus.extend({
 // extend instance methods
 // ====================================
 
-Clus.extend(instance);
+Clus.fn.extend(instance);
+Clus.fn.extend(event);
 
 // ====================================
 // extend selector
