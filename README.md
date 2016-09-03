@@ -36,6 +36,8 @@ Example:
 - <a href="#toggle-class">`.toggleClass()`</a>
 - <a href="#append">`.append()`</a>
 - <a href="#append-to">`.appendTo()`</a>
+- <a href="#parent">`.parent()`</a>
+- <a href="#parents">`.parents()`</a>
 
 ### DOM
 
@@ -113,4 +115,23 @@ Example:
 
 ```js
 $('<h1>Hello Clus</h1>').appendTo('body');
+```
+
+<a name="parent"></a>
+#### `.parent()`
+
+Example:
+
+```js
+$('.hello').parent();
+```
+
+<a name="parents"></a>
+#### `.parents()`
+
+Example:
+
+```js
+$('.hello').parents();
+$('.hello').parents('body');
 ```
