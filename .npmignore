@@ -1,0 +1,9 @@
+node_modules
+src
+test
+bower.json
+rollup.config.js
+.babelrc
+.eslintrc
+.eslintignore
+.gitignore
