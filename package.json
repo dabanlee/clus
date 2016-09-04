@@ -1,7 +1,7 @@
 {
   "name": "clus",
   "version": "1.1.1",
-  "description": "A minimalist JavaScript library to modify DOM element for modern browsers.",
+  "description": "A minimalist JavaScript library for modern browsers.",
   "main": "dist/clus.js",
   "scripts": {
     "test": "mocha-phantomjs test/index.html",
