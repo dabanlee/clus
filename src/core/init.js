@@ -1,5 +1,5 @@
 //
-// init.js
+// initialize
 //
 
 export default function init(selector = '') {

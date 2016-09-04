@@ -1,9 +1,27 @@
 //
-// classes.js
+// dom
 //
 
 const rnotwhite = /\S+/g;
 const rclass = /[\t\r\n\f]/g;
+
+export function ready(callback) {
+    if (
+        document
+        &&
+        /complete|loaded|interactive/.test(document.readyState)
+        &&
+        document.body
+    ) {
+        callback();
+    } else {
+        document.addEventListener('DOMContentLoaded', function () {
+            callback();
+        }, false);
+    }
+
+    return this;
+}
 
 export function getClass(el) {
     return el.getAttribute && el.getAttribute('class') || '';
@@ -103,9 +121,38 @@ export function toggleClass(cls) {
     }
 }
 
-export default {
+export function append(DOMString) {
+    let el, i = 0,
+        fregmentCollection = Clus.parseHTML(DOMString),
+        fregments = Array.prototype.slice.apply(fregmentCollection);
+
+    while((el = this[i++])) {
+        fregments.map(fregment => {
+            el.appendChild(fregment);
+        });
+    }
+
+    return this;
+}
+
+export function appendTo(selector) {
+    let fregment, i = 0,
+        elCollection = Clus.find(selector),
+        els = Array.prototype.slice.apply(elCollection);
+
+    while((fregment = this[i++])) {
+        els.map(el => {
+            el.appendChild(fregment);
+        });
+    }
+}
+
+Clus.fn.extend({
+    ready,
     addClass,
     removeClass,
     hasClass,
     toggleClass,
-};
+    append,
+    appendTo,
+});

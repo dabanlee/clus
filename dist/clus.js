@@ -4,6 +4,43 @@
   (factory());
 }(this, (function () { 'use strict';
 
+//
+// initialize
+//
+
+function init() {
+    var selector = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+
+    var dom = void 0,
+        fragmentRE = /^\s*<(\w+|!)[^>]*>/,
+        selectorType = Clus.type(selector),
+        elementTypes = [1, 9, 11];
+
+    if (!selector) {
+        dom = [], dom.selector = selector;
+    } else if (elementTypes.indexOf(selector.nodeType) !== -1 || selector === window) {
+        dom = [selector], selector = null;
+    } else if (selectorType === 'function') {
+        return Clus(document).ready(selector);
+    } else if (selectorType === 'array') {
+        dom = selector;
+    } else if (selectorType === 'object') {
+        dom = [selector], selector = null;
+    } else if (selectorType === 'string') {
+        if (selector[0] === '<' && fragmentRE.test(selector)) {
+            dom = Clus.parseHTML(selector), selector = null;
+        } else {
+            dom = [].slice.call(document.querySelectorAll(selector));
+        }
+    }
+
+    dom = dom || [];
+    Clus.extend(dom, Clus.fn);
+    dom.selector = selector;
+
+    return dom;
+}
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
   return typeof obj;
 } : function (obj) {
@@ -11,7 +48,93 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 };
 
 //
-// utils.js
+// extend
+//
+
+function extend() {
+    var options = void 0,
+        name = void 0,
+        clone = void 0,
+        copy = void 0,
+        source = void 0,
+        copyIsArray = void 0,
+        target = arguments[0] || {},
+        i = 1,
+        length = arguments.length,
+        deep = false;
+
+    if (typeof target === 'boolean') {
+        deep = target;
+        target = arguments[i] || {};
+        i++;
+    }
+
+    if ((typeof target === 'undefined' ? 'undefined' : _typeof(target)) !== 'object' && Clus.type(target) !== 'function') {
+        target = {};
+    }
+
+    if (i === length) {
+        target = this;
+        i--;
+    }
+
+    for (; i < length; i++) {
+        //
+        if ((options = arguments[i]) !== null) {
+            // for in source object
+            for (name in options) {
+
+                source = target[name];
+                copy = options[name];
+
+                if (target == copy) {
+                    continue;
+                }
+
+                // deep clone
+                if (deep && copy && (Clus.isPlainObject(copy) || (copyIsArray = Array.isArray(copy)))) {
+                    // if copy is array
+                    if (copyIsArray) {
+                        copyIsArray = false;
+                        // if is not array, set it to array
+                        clone = source && Array.isArray(source) ? source : [];
+                    } else {
+                        // if copy is not a object, set it to object
+                        clone = source && Clus.isPlainObject(source) ? source : {};
+                    }
+
+                    target[name] = extend(deep, clone, copy);
+                } else if (copy !== undefined) {
+                    target[name] = copy;
+                }
+            }
+        }
+    }
+
+    return target;
+}
+
+//
+// core
+//
+
+function Clus$1(selector) {
+    return new Clus$1.fn.init(selector);
+}
+
+Clus$1.fn = Clus$1.prototype = {
+    contructor: Clus$1,
+    init: init
+};
+
+Clus$1.fn.init.prototype = Clus$1.fn;
+
+Clus$1.extend = Clus$1.fn.extend = extend;
+
+window.Clus = window.C = window.$ = Clus$1;
+
+//
+// global methods
 //
 
 function rootQuery(selector) {
@@ -64,12 +187,65 @@ function isPlainObject(object) {
     return typeof ctor === 'function' && fnToString.call(ctor) === ObjectFunctionString;
 }
 
+function isWindow(object) {
+    return object !== null && object === object.window;
+}
+
+function isArrayLike(object) {
+    var len = !!object && 'length' in object && object.length,
+        type = Clus.type(object);
+
+    if (type === 'function' || isWindow(object)) return false;
+
+    return type === 'array' || len === 0 || typeof length === 'number' && len > 0 && len - 1 in object;
+}
+
+function map(items, callback) {
+    var value = void 0,
+        values = [],
+        len = void 0,
+        i = 0;
+
+    if (isArrayLike(items)) {
+        len = items.length;
+        for (; i < len; i++) {
+            value = callback(items[i], i);
+            if (value != null) values.push(value);
+        }
+    } else {
+        for (i in items) {
+            value = callback(items[i], i);
+            if (value != null) values.push(value);
+        }
+    }
+
+    return values;
+}
+
+function each(items, callback) {
+    var len = void 0,
+        i = 0;
+
+    if (isArrayLike(items)) {
+        len = items.length;
+        for (; i < len; i++) {
+            if (callback.call(items[i], i, items[i]) === false) return items;
+        }
+    } else {
+        for (i in items) {
+            if (callback.call(items[i], i, items[i]) === false) return items;
+        }
+    }
+
+    return items;
+}
+
 function merge(first, second) {
-    var length = +second.length,
+    var len = +second.length,
         j = 0,
         i = first.length;
 
-    for (; j < length; j++) {
+    for (; j < len; j++) {
         first[i++] = second[j];
     }
 
@@ -98,109 +274,38 @@ function matches(element, selector) {
     return matchesSelector.call(element, selector);
 }
 
-//
-// init.js
-//
-
-function init() {
-    var selector = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
-
-    var dom = void 0,
-        fragmentRE = /^\s*<(\w+|!)[^>]*>/,
-        selectorType = Clus.type(selector),
-        elementTypes = [1, 9, 11];
-
-    if (!selector) {
-        dom = [], dom.selector = selector;
-    } else if (elementTypes.indexOf(selector.nodeType) !== -1 || selector === window) {
-        dom = [selector], selector = null;
-    } else if (selectorType === 'function') {
-        return Clus(document).ready(selector);
-    } else if (selectorType === 'array') {
-        dom = selector;
-    } else if (selectorType === 'object') {
-        dom = [selector], selector = null;
-    } else if (selectorType === 'string') {
-        if (selector[0] === '<' && fragmentRE.test(selector)) {
-            dom = Clus.parseHTML(selector), selector = null;
-        } else {
-            dom = [].slice.call(document.querySelectorAll(selector));
-        }
-    }
-
-    dom = dom || [];
-    Clus.extend(dom, Clus.fn);
-    dom.selector = selector;
-
-    return dom;
+function parseHTML(DOMString) {
+    var htmlDoc = document.implementation.createHTMLDocument();
+    htmlDoc.body.innerHTML = DOMString;
+    return htmlDoc.body.children;
 }
 
+Clus.extend({
+    find: rootQuery,
+    type: type,
+    isPlainObject: isPlainObject,
+    isWindow: isWindow,
+    isArrayLike: isArrayLike,
+    each: each,
+    map: map,
+    merge: merge,
+    trim: trim,
+    unique: unique,
+    matches: matches,
+    parseHTML: parseHTML
+});
+
 //
-// extend.js
+// instance methods
 //
 
-function extend() {
-    var options = void 0,
-        name = void 0,
-        clone = void 0,
-        copy = void 0,
-        source = void 0,
-        copyIsArray = void 0,
-        target = arguments[0] || {},
-        i = 1,
-        length = arguments.length,
-        deep = false;
-
-    if (typeof target === 'boolean') {
-        deep = target;
-        target = arguments[i] || {};
-        i++;
-    }
-
-    if ((typeof target === 'undefined' ? 'undefined' : _typeof(target)) !== 'object' && type(target) !== 'function') {
-        target = {};
-    }
-
-    if (i === length) {
-        target = this;
-        i--;
-    }
-
-    for (; i < length; i++) {
-        //
-        if ((options = arguments[i]) !== null) {
-            // for in source object
-            for (name in options) {
-
-                source = target[name];
-                copy = options[name];
-
-                if (target == copy) {
-                    continue;
-                }
-
-                // deep clone
-                if (deep && copy && (isPlainObject(copy) || (copyIsArray = Array.isArray(copy)))) {
-                    // if copy is array
-                    if (copyIsArray) {
-                        copyIsArray = false;
-                        // if is not array, set it to array
-                        clone = source && Array.isArray(source) ? source : [];
-                    } else {
-                        // if copy is not a object, set it to object
-                        clone = source && isPlainObject(source) ? source : {};
-                    }
-
-                    target[name] = extend(deep, clone, copy);
-                } else if (copy !== undefined) {
-                    target[name] = copy;
-                }
-            }
-        }
-    }
-
-    return target;
+function is(selector) {
+    return this.length > 0 && Clus.matches(this[0], selector);
 }
+
+Clus.fn.extend({
+    is: is
+});
 
 //
 // event
@@ -220,7 +325,7 @@ function on(eventName, selector, handler, capture) {
             }
             for (j = 0; j < events.length; j++) {
                 // check for namespaces
-                if (events[j].indexOf('.') != -1) {
+                if (events[j].indexOf('.') !== -1) {
                     handleNamespaces(this[i], events[j], handler, capture);
                 } else {
                     this[i].addEventListener(events[j], handler, capture);
@@ -238,7 +343,7 @@ function on(eventName, selector, handler, capture) {
                     liveListener: handleLiveEvent
                 });
 
-                if (events[j].indexOf('.') != -1) {
+                if (events[j].indexOf('.') !== -1) {
                     handleNamespaces(this[i], events[j], handleLiveEvent, capture);
                 } else {
                     this[i].addEventListener(events[j], handleLiveEvent, capture);
@@ -355,17 +460,17 @@ function off(eventName, selector, handler, capture) {
     return this;
 }
 
-var event = {
+Clus.fn.extend({
     on: on,
     off: off
-};
+});
 
 //
-// search.js
+// dom search
 //
 
 function pushStack(els) {
-    var ret = merge(this.contructor(), els);
+    var ret = Clus.merge(this.contructor(), els);
     ret.prevObject = this;
     return ret;
 }
@@ -376,7 +481,7 @@ function find(selector) {
         ret = this.pushStack([]);
 
     while (el = this[i++]) {
-        ret = merge(ret, el.querySelectorAll(selector));
+        ret = Clus.merge(ret, el.querySelectorAll(selector));
     }
 
     return ret;
@@ -415,7 +520,7 @@ function parent(selector) {
             }
         }
     }
-    parents = unique(parents);
+    parents = Clus.unique(parents);
     return Clus(parents);
 }
 
@@ -437,11 +542,11 @@ function parents(selector) {
             parent = parent.parentNode;
         }
     }
-    parents = unique(parents);
+    parents = Clus.unique(parents);
     return Clus(parents);
 }
 
-var search = {
+Clus.fn.extend({
     pushStack: pushStack,
     find: find,
     end: end,
@@ -450,23 +555,14 @@ var search = {
     last: last,
     parent: parent,
     parents: parents
-};
+});
 
 //
-// instance methods
+// dom
 //
 
-function is(selector) {
-    return this.length > 0 && Clus.matches(this[0], selector);
-}
-
-var instance = {
-    is: is
-};
-
-//
-// ready.js
-//
+var rnotwhite = /\S+/g;
+var rclass = /[\t\r\n\f]/g;
 
 function ready(callback) {
     if (document && /complete|loaded|interactive/.test(document.readyState) && document.body) {
@@ -479,45 +575,6 @@ function ready(callback) {
 
     return this;
 }
-
-//
-// append.js
-//
-
-function appendTo(selector) {
-    var fregment = void 0,
-        i = 0,
-        elCollection = Clus.find(selector),
-        els = Array.prototype.slice.apply(elCollection);
-
-    while (fregment = this[i++]) {
-        els.map(function (el) {
-            el.appendChild(fregment);
-        });
-    }
-}
-
-function append(DOMString) {
-    var el = void 0,
-        i = 0,
-        fregmentCollection = Clus.parseHTML(DOMString),
-        fregments = Array.prototype.slice.apply(fregmentCollection);
-
-    while (el = this[i++]) {
-        fregments.map(function (fregment) {
-            el.appendChild(fregment);
-        });
-    }
-
-    return this;
-}
-
-//
-// classes.js
-//
-
-var rnotwhite = /\S+/g;
-var rclass = /[\t\r\n\f]/g;
 
 function getClass(el) {
     return el.getAttribute && el.getAttribute('class') || '';
@@ -630,82 +687,43 @@ function toggleClass(cls) {
     }
 }
 
-//
-// Element Extend
-//
+function append(DOMString) {
+    var el = void 0,
+        i = 0,
+        fregmentCollection = Clus.parseHTML(DOMString),
+        fregments = Array.prototype.slice.apply(fregmentCollection);
 
-var DOM = {
+    while (el = this[i++]) {
+        fregments.map(function (fregment) {
+            el.appendChild(fregment);
+        });
+    }
+
+    return this;
+}
+
+function appendTo(selector) {
+    var fregment = void 0,
+        i = 0,
+        elCollection = Clus.find(selector),
+        els = Array.prototype.slice.apply(elCollection);
+
+    while (fregment = this[i++]) {
+        els.map(function (el) {
+            el.appendChild(fregment);
+        });
+    }
+}
+
+Clus.fn.extend({
     ready: ready,
-    append: append,
-    appendTo: appendTo,
     addClass: addClass,
     removeClass: removeClass,
     hasClass: hasClass,
-    toggleClass: toggleClass
-};
-
-//
-// parseHTML
-//
-
-function parseHTML(DOMString) {
-    var htmlDoc = document.implementation.createHTMLDocument();
-    htmlDoc.body.innerHTML = DOMString;
-    return htmlDoc.body.children;
-}
-
-//
-// Core.js
-//
-
-function Clus$1(selector) {
-    return new Clus$1.fn.init(selector);
-}
-
-Clus$1.fn = Clus$1.prototype = {
-    contructor: Clus$1,
-    init: init
-};
-
-Clus$1.fn.init.prototype = Clus$1.fn;
-
-Clus$1.extend = Clus$1.fn.extend = extend;
-
-// ====================================
-// extend Clus methods
-// ====================================
-
-Clus$1.extend({
-    find: rootQuery,
-    merge: merge,
-    trim: trim,
-    type: type,
-    parseHTML: parseHTML,
-    unique: unique,
-    matches: matches
+    toggleClass: toggleClass,
+    append: append,
+    appendTo: appendTo
 });
-
-// ====================================
-// extend instance methods
-// ====================================
-
-Clus$1.fn.extend(instance);
-Clus$1.fn.extend(event);
-
-// ====================================
-// extend selector
-// ====================================
-
-Clus$1.fn.extend(search);
-
-// ====================================
-// extend DOM methods
-// ====================================
-Clus$1.fn.extend(DOM);
-
-window.Clus = window.C = window.$ = Clus$1;
-
-// @flow
 
 })));
 //# sourceMappingURL=clus.js.map

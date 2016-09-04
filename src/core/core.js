@@ -1,15 +1,9 @@
 //
-// Core.js
+// core
 //
 
-import { rootQuery, merge, trim, type, unique, matches } from './utils.js';
-import init from './init.js';
-import extend from './extend.js';
-import event from './event.js';
-import search from './search.js';
-import instance from './instance.js';
-import DOM from './dom/index.js';
-import parseHTML from './dom/parseHTML.js';
+import init from './init';
+import extend from './extend';
 
 export default function Clus (selector) {
     return new Clus.fn.init(selector);
@@ -23,37 +17,5 @@ Clus.fn = Clus.prototype = {
 Clus.fn.init.prototype = Clus.fn;
 
 Clus.extend = Clus.fn.extend = extend;
-
-// ====================================
-// extend Clus methods
-// ====================================
-
-Clus.extend({
-    find: rootQuery,
-    merge,
-    trim,
-    type,
-    parseHTML,
-    unique,
-    matches,
-});
-
-// ====================================
-// extend instance methods
-// ====================================
-
-Clus.fn.extend(instance);
-Clus.fn.extend(event);
-
-// ====================================
-// extend selector
-// ====================================
-
-Clus.fn.extend(search);
-
-// ====================================
-// extend DOM methods
-// ====================================
-Clus.fn.extend(DOM);
 
 window.Clus = window.C = window.$ = Clus;

@@ -1,5 +1,5 @@
 //
-// utils.js
+// global methods
 //
 
 export function rootQuery(selector) {
@@ -57,12 +57,61 @@ export function isPlainObject(object) {
     return typeof ctor === 'function' && fnToString.call( ctor ) === ObjectFunctionString;
 }
 
+export function isWindow(object) {
+    return object !== null && object === object.window;
+}
+
+export function isArrayLike(object) {
+    let len = !!object && 'length' in object && object.length,
+		type = Clus.type(object);
+
+	if (type === 'function' || isWindow(object)) return false;
+
+	return type === 'array' || len === 0 || typeof length === 'number' && len > 0 && (len - 1) in object;
+}
+
+export function map(items, callback) {
+    let value, values = [], len, i = 0;
+
+	if (isArrayLike(items)) {
+		len = items.length;
+		for (; i < len; i++) {
+            value = callback(items[i], i);
+            if (value != null) values.push(value);
+		}
+	} else {
+		for (i in items) {
+            value = callback(items[i], i);
+            if (value != null) values.push(value);
+		}
+	}
+
+	return values;
+}
+
+export function each(items, callback) {
+    let len, i = 0;
+
+	if ( isArrayLike(items) ) {
+		len = items.length;
+		for ( ; i < len; i++ ) {
+			if (callback.call(items[i], i, items[i]) === false) return items;
+		}
+	} else {
+		for ( i in items ) {
+            if (callback.call(items[i], i, items[i]) === false) return items;
+		}
+	}
+
+	return items;
+}
+
 export function merge(first, second) {
-    let length = +second.length,
+    let len = +second.length,
 		j = 0,
 		i = first.length;
 
-	for ( ; j < length; j++ ) {
+	for ( ; j < len; j++ ) {
 		first[ i++ ] = second[ j ];
 	}
 
@@ -88,3 +137,24 @@ export function matches(element, selector) {
 
     return matchesSelector.call(element, selector);
 }
+
+export function parseHTML(DOMString) {
+    let htmlDoc = document.implementation.createHTMLDocument();
+    htmlDoc.body.innerHTML = DOMString;
+    return htmlDoc.body.children;
+}
+
+Clus.extend({
+    find: rootQuery,
+    type,
+    isPlainObject,
+    isWindow,
+    isArrayLike,
+    each,
+    map,
+    merge,
+    trim,
+    unique,
+    matches,
+    parseHTML,
+});

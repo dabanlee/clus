@@ -1,8 +1,6 @@
 //
-// extend.js
+// extend
 //
-
-import { isPlainObject, type } from './utils.js';
 
 export default function extend() {
     let options, name, clone, copy, source, copyIsArray,
@@ -17,7 +15,7 @@ export default function extend() {
         i++;
     }
 
-    if (typeof target !== 'object' && type(target) !== 'function') {
+    if (typeof target !== 'object' && Clus.type(target) !== 'function') {
         target = {};
     }
 
@@ -40,7 +38,7 @@ export default function extend() {
                 }
 
                 // deep clone
-                if (deep && copy && (isPlainObject(copy) || (copyIsArray = Array.isArray(copy)))) {
+                if (deep && copy && (Clus.isPlainObject(copy) || (copyIsArray = Array.isArray(copy)))) {
                     // if copy is array
                     if (copyIsArray) {
                         copyIsArray = false;
@@ -48,7 +46,7 @@ export default function extend() {
                         clone = source && Array.isArray(source) ? source : [];
                     } else {
                         // if copy is not a object, set it to object
-                        clone = source && isPlainObject(source) ? source : {};
+                        clone = source && Clus.isPlainObject(source) ? source : {};
                     }
 
                     target[name] = extend(deep, clone, copy);

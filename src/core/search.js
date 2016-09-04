@@ -1,11 +1,9 @@
 //
-// search.js
+// dom search
 //
 
-import { merge, unique } from './utils.js';
-
 function pushStack(els) {
-    let ret = merge(this.contructor(), els);
+    let ret = Clus.merge(this.contructor(), els);
     ret.prevObject = this;
     return ret;
 }
@@ -16,7 +14,7 @@ function find(selector) {
         ret = this.pushStack([]);
 
     while((el = this[i++])) {
-        ret = merge(ret, el.querySelectorAll(selector));
+        ret = Clus.merge(ret, el.querySelectorAll(selector));
     }
 
     return ret;
@@ -53,7 +51,7 @@ function parent(selector) {
             }
         }
     }
-    parents = unique(parents)
+    parents = Clus.unique(parents);
     return Clus(parents);
 }
 
@@ -72,11 +70,11 @@ function parents(selector) {
             parent = parent.parentNode;
         }
     }
-    parents = unique(parents);
+    parents = Clus.unique(parents);
     return Clus(parents);
 }
 
-export default {
+Clus.fn.extend({
     pushStack,
     find,
     end,
@@ -85,4 +83,4 @@ export default {
     last,
     parent,
     parents,
-};
+});

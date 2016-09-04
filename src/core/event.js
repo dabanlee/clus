@@ -14,7 +14,7 @@ export function on(eventName, selector, handler, capture) {
             }
             for (j = 0; j < events.length; j++) {
                 // check for namespaces
-                if (events[j].indexOf('.') != -1) {
+                if (events[j].indexOf('.') !== -1) {
                     handleNamespaces(this[i], events[j], handler, capture);
                 } else {
                     this[i].addEventListener(events[j], handler, capture);
@@ -29,10 +29,10 @@ export function on(eventName, selector, handler, capture) {
 
                 this[i].DomLiveListeners.push({
                     handler: handler,
-                    liveListener: handleLiveEvent
+                    liveListener: handleLiveEvent,
                 });
 
-                if (events[j].indexOf('.') != -1) {
+                if (events[j].indexOf('.') !== -1) {
                     handleNamespaces(this[i], events[j], handleLiveEvent, capture);
                 } else {
                     this[i].addEventListener(events[j], handleLiveEvent, capture);
@@ -69,7 +69,7 @@ export function on(eventName, selector, handler, capture) {
             namespace: namespace[1],
             event: namespace[0],
             handler: handler,
-            capture: capture
+            capture: capture,
         });
 
         elm.addEventListener(namespace[0], handler, capture);
@@ -145,7 +145,7 @@ export function off(eventName, selector, handler, capture) {
     return this;
 }
 
-export default {
+Clus.fn.extend({
     on,
     off,
-};
+});
