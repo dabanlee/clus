@@ -200,6 +200,23 @@ function isArrayLike(object) {
     return type === 'array' || len === 0 || typeof length === 'number' && len > 0 && len - 1 in object;
 }
 
+function flatten(array) {
+    var ret = [],
+        el = void 0,
+        i = 0,
+        len = array.length;
+
+    for (; i < len; i++) {
+        el = array[i];
+        if (Array.isArray(el)) {
+            ret.push.apply(ret, flatten(el));
+        } else {
+            ret.push(el);
+        }
+    }
+    return ret;
+}
+
 function map(items, callback) {
     var value = void 0,
         values = [],
@@ -219,7 +236,7 @@ function map(items, callback) {
         }
     }
 
-    return values;
+    return flatten(values);
 }
 
 function each(items, callback) {

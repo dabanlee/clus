@@ -70,6 +70,23 @@ export function isArrayLike(object) {
 	return type === 'array' || len === 0 || typeof length === 'number' && len > 0 && (len - 1) in object;
 }
 
+export function flatten(array) {
+    let ret = [],
+        el,
+        i = 0,
+        len = array.length;
+
+    for (; i < len; i++) {
+        el = array[i];
+        if (Array.isArray(el)) {
+            ret.push.apply(ret, flatten(el));
+        } else {
+            ret.push(el);
+        }
+    }
+    return ret;
+}
+
 export function map(items, callback) {
     let value, values = [], len, i = 0;
 
@@ -86,7 +103,7 @@ export function map(items, callback) {
 		}
 	}
 
-	return values;
+	return flatten(values);
 }
 
 export function each(items, callback) {
