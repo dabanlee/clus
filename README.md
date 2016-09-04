@@ -35,6 +35,11 @@ $ npm i clus --save
 $ bower i clus
 ```
 
+### Global methods
+
+- <a href="#each-global">`$.each()`</a>
+- <a href="#map-global">`$.map()`</a>
+
 ### Instance methods
 
 - <a href="#ready">`.ready()`</a>
@@ -46,9 +51,7 @@ $ bower i clus
 - <a href="#append-to">`.appendTo()`</a>
 - <a href="#parent">`.parent()`</a>
 - <a href="#parents">`.parents()`</a>
-- <a href="#each-global">`$.each()`</a>
 - <a href="#each-instance">`.each()`</a>
-- <a href="#map-global">`$.map()`</a>
 - <a href="#map-instance">`.map()`</a>
 - <a href="#on">`.on()`</a>
 - <a href="#off">`.off()`</a>
