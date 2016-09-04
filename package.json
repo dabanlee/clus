@@ -1,15 +1,16 @@
 {
   "name": "clus",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A minimalist JavaScript library to modify DOM element for modern browsers.",
   "main": "dist/clus.js",
   "scripts": {
     "test": "mocha-phantomjs test/index.html",
+    "start": "npm run watch",
     "build": "rm -rf dist && npm run dev",
+    "watch": "NODE_ENV=development rollup -w -c rollup.config.js",
+    "dev": "NODE_ENV=development rollup -c rollup.config.js",
+    "prod": "NODE_ENV=production rollup -c rollup.config.js",
     "publish": "rm -rf dist && npm run dev && npm run prod",
-    "watch": "rollup -w -c rollup.config.dev.js",
-    "dev": "rollup -c rollup.config.dev.js",
-    "prod": "rollup -c rollup.config.prod.js",
     "lint": "eslint src"
   },
   "repository": {
