@@ -3,6 +3,7 @@ src
 test
 bower.json
 rollup.config.js
+index.html
 .babelrc
 .eslintrc
 .eslintignore
