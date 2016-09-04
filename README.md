@@ -39,9 +39,9 @@ Example:
 - <a href="#parent">`.parent()`</a>
 - <a href="#parents">`.parents()`</a>
 - <a href="#each-global">`$.each()`</a>
-- <a href="#each-instance">`$(selector).each()`</a>
+- <a href="#each-instance">`.each()`</a>
 - <a href="#map-global">`$.map()`</a>
-- <a href="#map-instance">`$(selector).map()`</a>
+- <a href="#map-instance">`.map()`</a>
 
 ### DOM
 
@@ -155,7 +155,7 @@ $.each(['just', 'hello', 'world'], function (item, index) {
 ```
 
 <a name="each-instance"></a>
-#### `$('.hello').each()`
+#### `.each()`
 
 Example:
 
@@ -181,7 +181,7 @@ $.map(['just', 'hello', 'world'], function (item, index) {
 ```
 
 <a name="map-instance"></a>
-#### `$('.hello').map()`
+#### `.map()`
 
 Example:
 
