@@ -10,6 +10,7 @@ export function instanceMap(callback) {
     return Clus(Clus.map(this, function(item, index) {
         return callback.call(item, item, index);
     }));
+    return this;
 }
 
 export function instanceEach(callback) {

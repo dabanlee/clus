@@ -246,11 +246,11 @@ function each(items, callback) {
     if (isArrayLike(items)) {
         len = items.length;
         for (; i < len; i++) {
-            if (callback.call(items[i], i, items[i]) === false) return items;
+            if (callback.call(items[i], items[i], i) === false) return items;
         }
     } else {
         for (i in items) {
-            if (callback.call(items[i], i, items[i]) === false) return items;
+            if (callback.call(items[i], items[i], i) === false) return items;
         }
     }
 
@@ -324,6 +324,7 @@ function instanceMap(callback) {
     return Clus(Clus.map(this, function (item, index) {
         return callback.call(item, item, index);
     }));
+    return this;
 }
 
 function instanceEach(callback) {
