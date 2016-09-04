@@ -38,6 +38,10 @@ Example:
 - <a href="#append-to">`.appendTo()`</a>
 - <a href="#parent">`.parent()`</a>
 - <a href="#parents">`.parents()`</a>
+- <a href="#each-global">`$.each()`</a>
+- <a href="#each-instance">`$(selector).each()`</a>
+- <a href="#map-global">`$.map()`</a>
+- <a href="#map-instance">`$(selector).map()`</a>
 
 ### DOM
 
@@ -134,4 +138,56 @@ Example:
 ```js
 $('.hello').parents();
 $('.hello').parents('body');
+```
+
+<a name="each-global"></a>
+#### `$.each()`
+
+Example:
+
+```js
+$.each(['just', 'hello', 'world'], function (item, index) {
+    console.log(item, index);
+});
+// just 0
+// hello 1
+// world 2
+```
+
+<a name="each-instance"></a>
+#### `$('.hello').each()`
+
+Example:
+
+```js
+$('.hello').each(function (item, index) {
+    $(this).addClass('world');
+    console.log($(this));
+});
+```
+
+<a name="map-global"></a>
+#### `$.map()`
+
+Example:
+
+```js
+$.map(['just', 'hello', 'world'], function (item, index) {
+    console.log(item, index);
+});
+// just 0
+// hello 1
+// world 2
+```
+
+<a name="map-instance"></a>
+#### `$('.hello').map()`
+
+Example:
+
+```js
+$('.hello').map(function (item, index) {
+    $(this).addClass('world');
+    console.log($(this));
+});
 ```
