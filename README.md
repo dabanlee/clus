@@ -27,6 +27,14 @@ Example:
 
 ## Usage
 
+### Install
+
+```sh
+$ npm i clus --save
+# or
+$ bower i clus
+```
+
 ### Instance methods
 
 - <a href="#ready">`.ready()`</a>
@@ -42,6 +50,8 @@ Example:
 - <a href="#each-instance">`.each()`</a>
 - <a href="#map-global">`$.map()`</a>
 - <a href="#map-instance">`.map()`</a>
+- <a href="#on">`.on()`</a>
+- <a href="#off">`.off()`</a>
 
 ### DOM
 
@@ -190,4 +200,32 @@ $('.hello').map(function (item, index) {
     $(this).addClass('world');
     console.log($(this));
 });
+```
+
+<a name="on"></a>
+#### `.on()`
+
+Example:
+
+```js
+$('.hello').on('click', function () {
+    console.log($(this));
+});
+
+$(document).on('click', '.hello', function () {
+    console.log($(this));
+});
+```
+
+<a name="off"></a>
+#### `.off()`
+
+Example:
+
+```js
+let hello = function () {
+    console.log('hello');
+}
+$(document).on('click', '.hello', hello);
+$(document).off('click', '.hello', hello);
 ```
