@@ -75,7 +75,7 @@ $(function () {
 ```
 
 <a name="add-class"></a>
-#### `.addClass(clasNname)`
+#### `.addClass(className)`
 
 Example:
 
@@ -87,7 +87,7 @@ $('p').addClass('hello').addClass('world');
 ```
 
 <a name="remove-class"></a>
-#### `.removeClass(clasNname)`
+#### `.removeClass(className)`
 
 Example:
 
@@ -99,7 +99,7 @@ $('p').addClass('hello world').removeClass('hello').removeClass('world');
 ```
 
 <a name="has-class"></a>
-#### `.hasClass(clasNname)`
+#### `.hasClass(className)`
 
 Example:
 
@@ -109,7 +109,7 @@ $('p').hasClass('world'); // false
 ```
 
 <a name="toggle-class"></a>
-#### `.toggleClass(clasNname)`
+#### `.toggleClass(className)`
 
 Example:
 
