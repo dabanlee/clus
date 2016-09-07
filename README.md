@@ -51,6 +51,7 @@ $ bower i clus
 - <a href="#append-to">`.appendTo()`</a>
 - <a href="#parent">`.parent()`</a>
 - <a href="#parents">`.parents()`</a>
+- <a href="#children">`.children()`</a>
 - <a href="#each-instance">`.each()`</a>
 - <a href="#map-instance">`.map()`</a>
 - <a href="#on">`.on()`</a>
@@ -151,6 +152,16 @@ Example:
 ```js
 $('.hello').parents();
 $('.hello').parents('body');
+```
+
+<a name="children"></a>
+#### `.children()`
+
+Example:
+
+```js
+$('.hello').children();
+$('.hello').children('.world');
 ```
 
 <a name="each-global"></a>
