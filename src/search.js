@@ -74,6 +74,26 @@ function parents(selector) {
     return Clus(parents);
 }
 
+function children(selector) {
+    let children = [], childNodes, i = 0, j = 0, len = this.length;
+    for (; i < len; i++) {
+        childNodes = this[i].childNodes;
+        for (; j < childNodes.length; j++) {
+            if (!selector) {
+                if (childNodes[j].nodeType === 1) {
+                    children.push(childNodes[j]);
+                }
+            } else {
+                if (childNodes[j].nodeType === 1 && Clus(childNodes[j]).is(selector)) {
+                    children.push(childNodes[j]);
+                }
+            }
+        }
+    }
+
+    return Clus(Clus.unique(children));
+}
+
 Clus.fn.extend({
     pushStack,
     find,
@@ -83,4 +103,5 @@ Clus.fn.extend({
     last,
     parent,
     parents,
+    children,
 });

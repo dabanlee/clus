@@ -191,6 +191,10 @@ function isWindow(object) {
     return object !== null && object === object.window;
 }
 
+function isDocument(object) {
+    return object !== null && object.nodeType == object.DOCUMENT_NODE;
+}
+
 function isArrayLike(object) {
     var len = !!object && 'length' in object && object.length,
         type = Clus.type(object);
@@ -302,6 +306,7 @@ Clus.extend({
     type: type,
     isPlainObject: isPlainObject,
     isWindow: isWindow,
+    isDocument: isDocument,
     isArrayLike: isArrayLike,
     each: each,
     map: map,
@@ -578,6 +583,30 @@ function parents(selector) {
     return Clus(parents);
 }
 
+function children(selector) {
+    var children = [],
+        childNodes = void 0,
+        i = 0,
+        j = 0,
+        len = this.length;
+    for (; i < len; i++) {
+        childNodes = this[i].childNodes;
+        for (; j < childNodes.length; j++) {
+            if (!selector) {
+                if (childNodes[j].nodeType === 1) {
+                    children.push(childNodes[j]);
+                }
+            } else {
+                if (childNodes[j].nodeType === 1 && Clus(childNodes[j]).is(selector)) {
+                    children.push(childNodes[j]);
+                }
+            }
+        }
+    }
+
+    return Clus(Clus.unique(children));
+}
+
 Clus.fn.extend({
     pushStack: pushStack,
     find: find,
@@ -586,7 +615,8 @@ Clus.fn.extend({
     first: first,
     last: last,
     parent: parent,
-    parents: parents
+    parents: parents,
+    children: children
 });
 
 //
