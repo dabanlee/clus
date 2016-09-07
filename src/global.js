@@ -61,6 +61,10 @@ export function isWindow(object) {
     return object !== null && object === object.window;
 }
 
+export function isDocument(object) {
+    return object !== null && object.nodeType == object.DOCUMENT_NODE;
+}
+
 export function isArrayLike(object) {
     let len = !!object && 'length' in object && object.length,
 		type = Clus.type(object);
@@ -166,6 +170,7 @@ Clus.extend({
     type,
     isPlainObject,
     isWindow,
+    isDocument,
     isArrayLike,
     each,
     map,
