@@ -5,7 +5,7 @@
 const rnotwhite = /\S+/g;
 const rclass = /[\t\r\n\f]/g;
 
-export function ready(callback) {
+function ready(callback) {
     if (
         document
         &&
@@ -23,11 +23,11 @@ export function ready(callback) {
     return this;
 }
 
-export function getClass(el) {
+function getClass(el) {
     return el.getAttribute && el.getAttribute('class') || '';
 }
 
-export function addClass(cls) {
+function addClass(cls) {
     let classes, clazz, el, cur, curValue, finalValue, j, i = 0;
 
     if (typeof cls === 'string' && cls) {
@@ -57,7 +57,7 @@ export function addClass(cls) {
     return this;
 }
 
-export function removeClass(cls) {
+function removeClass(cls) {
     let classes, clazz, el, cur, curValue, finalValue, j, i = 0;
 
     if (!arguments.length) {
@@ -91,7 +91,7 @@ export function removeClass(cls) {
     return this;
 }
 
-export function hasClass(cls) {
+function hasClass(cls) {
     let el, i = 0, className = ` ${cls} `;
 
     while((el = this[i++])) {
@@ -107,7 +107,7 @@ export function hasClass(cls) {
     return false;
 }
 
-export function toggleClass(cls) {
+function toggleClass(cls) {
     let el, i = 0;
 
     while((el = this[i++])) {
@@ -121,7 +121,7 @@ export function toggleClass(cls) {
     }
 }
 
-export function append(DOMString) {
+function append(DOMString) {
     let el, i = 0,
         fregmentCollection = Clus.parseHTML(DOMString),
         fregments = Array.prototype.slice.apply(fregmentCollection);
@@ -135,7 +135,7 @@ export function append(DOMString) {
     return this;
 }
 
-export function appendTo(selector) {
+function appendTo(selector) {
     let fregment, i = 0,
         elCollection = Clus.find(selector),
         els = Array.prototype.slice.apply(elCollection);
@@ -147,6 +147,40 @@ export function appendTo(selector) {
     }
 }
 
+function attr(attrs, value) {
+    let attr, attrName, i = 0;
+
+    if (arguments.length === 1 && typeof attrs === 'string' && this.length) {
+        // get
+        attr = this[0].getAttribute(attrs);
+        return this[0] && (attr || attr === '') ? attr : undefined;
+    } else {
+        // set
+        for (; i < this.length; i++) {
+            if (arguments.length === 2) {
+                // string
+                this[i].setAttribute(attrs, value);
+            } else {
+                // object
+                for (attrName in attrs) {
+                    this[i][attrName] = attrs[attrName];
+                    this[i].setAttribute(attrName, attrs[attrName]);
+                }
+            }
+        }
+
+        return this;
+    }
+}
+
+function removeAttr(attr) {
+    for (let i = 0; i < this.length; i++) {
+        this[i].removeAttribute(attr);
+    }
+
+    return this;
+}
+
 Clus.fn.extend({
     ready,
     addClass,
@@ -155,4 +189,6 @@ Clus.fn.extend({
     toggleClass,
     append,
     appendTo,
+    attr,
+    removeAttr,
 });

@@ -777,6 +777,42 @@ function appendTo(selector) {
     }
 }
 
+function attr(attrs, value) {
+    var attr = void 0,
+        attrName = void 0,
+        i = 0;
+
+    if (arguments.length === 1 && typeof attrs === 'string' && this.length) {
+        // get
+        attr = this[0].getAttribute(attrs);
+        return this[0] && (attr || attr === '') ? attr : undefined;
+    } else {
+        // set
+        for (; i < this.length; i++) {
+            if (arguments.length === 2) {
+                // string
+                this[i].setAttribute(attrs, value);
+            } else {
+                // object
+                for (attrName in attrs) {
+                    this[i][attrName] = attrs[attrName];
+                    this[i].setAttribute(attrName, attrs[attrName]);
+                }
+            }
+        }
+
+        return this;
+    }
+}
+
+function removeAttr(attr) {
+    for (var i = 0; i < this.length; i++) {
+        this[i].removeAttribute(attr);
+    }
+
+    return this;
+}
+
 Clus.fn.extend({
     ready: ready,
     addClass: addClass,
@@ -784,7 +820,9 @@ Clus.fn.extend({
     hasClass: hasClass,
     toggleClass: toggleClass,
     append: append,
-    appendTo: appendTo
+    appendTo: appendTo,
+    attr: attr,
+    removeAttr: removeAttr
 });
 
 })));
