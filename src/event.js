@@ -2,7 +2,7 @@
 // event
 //
 
-export function on(eventName, selector, handler, capture) {
+function on(eventName, selector, handler, capture) {
     let events = eventName.split(' '), i, j;
 
     for (i = 0; i < this.length; i++) {
@@ -78,7 +78,7 @@ export function on(eventName, selector, handler, capture) {
     return this;
 }
 
-export function off(eventName, selector, handler, capture) {
+function off(eventName, selector, handler, capture) {
     let events,
         i, j, k,
         that = this;
@@ -145,7 +145,33 @@ export function off(eventName, selector, handler, capture) {
     return this;
 }
 
+function trigger(eventName, eventData) {
+    let events = eventName.split(' '),
+        i = 0,
+        j = 0,
+        evt;
+    for (; i < events.length; i++) {
+        for (; j < this.length; j++) {
+            try {
+                evt = new CustomEvent(events[i], {
+                    detail: eventData,
+                    bubbles: true,
+                    cancelable: true,
+                });
+            } catch (e) {
+                evt = document.createEvent('Event');
+                evt.initEvent(events[i], true, true);
+                evt.detail = eventData;
+            }
+            this[j].dispatchEvent(evt);
+        }
+    }
+
+    return this;
+}
+
 Clus.fn.extend({
     on,
     off,
+    trigger,
 });

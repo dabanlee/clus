@@ -497,9 +497,35 @@ function off(eventName, selector, handler, capture) {
     return this;
 }
 
+function trigger(eventName, eventData) {
+    var events = eventName.split(' '),
+        i = 0,
+        j = 0,
+        evt = void 0;
+    for (; i < events.length; i++) {
+        for (; j < this.length; j++) {
+            try {
+                evt = new CustomEvent(events[i], {
+                    detail: eventData,
+                    bubbles: true,
+                    cancelable: true
+                });
+            } catch (e) {
+                evt = document.createEvent('Event');
+                evt.initEvent(events[i], true, true);
+                evt.detail = eventData;
+            }
+            this[j].dispatchEvent(evt);
+        }
+    }
+
+    return this;
+}
+
 Clus.fn.extend({
     on: on,
-    off: off
+    off: off,
+    trigger: trigger
 });
 
 //
