@@ -880,7 +880,7 @@ function ajax() {
 
     if (!url) console.error('url must be specified.');
 
-    if (type === 'GET') url += url.indexOf('?') === -1 ? '?' + params : '&' + params;;
+    if (type === 'GET') url += url.indexOf('?') === -1 ? '?' + params : '&' + params;
 
     xhr.open(type, url);
 
@@ -903,6 +903,42 @@ function resToJson(res) {
 
 Clus.extend({
     ajax: ajax
+});
+
+//
+// css
+//
+
+var humpRE = /\-(\w)/g;
+
+function css(rules, value) {
+    var rule = void 0;
+    if (Clus.type(rules) === 'string') {
+        if (value === '' || Clus.type(value) === 'undefined' || Clus.type(value) === 'null') {
+            return document.defaultView.getComputedStyle(this[0], null).getPropertyValue(rules);
+        } else {
+            this.each(function (el) {
+                return el.style[humpize(rules)] = value;
+            });
+        }
+    } else {
+        for (rule in rules) {
+            this.each(function (el) {
+                return el.style[humpize(rule)] = rules[rule];
+            });
+        }
+    }
+    return this;
+}
+
+function humpize(rules) {
+    return rules.replace(humpRE, function (_, letter) {
+        return letter.toUpperCase();
+    });
+}
+
+Clus.fn.extend({
+    css: css
 });
 
 })));
