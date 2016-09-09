@@ -37,6 +37,7 @@ $ bower i clus
 
 ### Global methods
 
+- <a href="#ajax">`$.ajax()`</a>
 - <a href="#each-global">`$.each()`</a>
 - <a href="#map-global">`$.map()`</a>
 
@@ -56,6 +57,7 @@ $ bower i clus
 - <a href="#map-instance">`.map()`</a>
 - <a href="#on">`.on()`</a>
 - <a href="#off">`.off()`</a>
+- <a href="#trigger">`.trigger()`</a>
 
 ### DOM
 
@@ -242,4 +244,41 @@ let hello = function () {
 }
 $(document).on('click', '.hello', hello);
 $(document).off('click', '.hello', hello);
+```
+
+<a name="trigger"></a>
+#### `.trigger()`
+
+Example:
+
+```js
+let data = {
+    hello: 'hello',
+};
+$(document).on('hello', function (event) {
+    console.log(event.detail); // { hello: "hello" }
+});
+$(document).trigger('hello', data);
+```
+
+<a name="ajax"></a>
+#### `.ajax()`
+
+Example:
+
+```js
+$.ajax({
+    type: 'GET',
+    url: 'http://api.hello.com', // http://api.hello.com/?hello=hello&world=world
+    data: {
+        hello: 'hello',
+        world: 'world',
+    },
+    success: function (data) {
+        console.log(data);
+    },
+    error: function (error) {
+        console.error(error);
+    },
+});
 ```
