@@ -24,7 +24,7 @@ function ajax(option = {}) {
 
     if (!url) console.error('url must be specified.');
 
-    if (type === 'GET') url += url.indexOf('?') === -1 ? '?' + params : '&' + params;;
+    if (type === 'GET') url += url.indexOf('?') === -1 ? '?' + params : '&' + params;
 
     xhr.open(type, url);
 
@@ -38,7 +38,7 @@ function ajax(option = {}) {
         } else {
             error(resToJson(xhr.response));
         }
-    }
+    };
 }
 
 function resToJson(res) {
