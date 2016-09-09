@@ -4,3 +4,4 @@ import './instance';
 import './event';
 import './search';
 import './dom';
+import './ajax';
