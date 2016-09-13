@@ -911,6 +911,12 @@ Clus.extend({
 
 var humpRE = /\-(\w)/g;
 
+function humpize(rules) {
+    return rules.replace(humpRE, function (_, letter) {
+        return letter.toUpperCase();
+    });
+}
+
 function css(rules, value) {
     var rule = void 0;
     if (Clus.type(rules) === 'string') {
@@ -931,14 +937,52 @@ function css(rules, value) {
     return this;
 }
 
-function humpize(rules) {
-    return rules.replace(humpRE, function (_, letter) {
-        return letter.toUpperCase();
-    });
+function width(width) {
+    if (width !== undefined) {
+        return this.css('width', width);
+    }
+
+    var el = this[0];
+
+    switch (el) {
+        case window:
+            return window.innerWidth;
+            break;
+        case document:
+            return document.documentElement.scrollWidth;
+            break;
+        default:
+            return this.length > 0 ? parseFloat(this.css('width')) : null;
+    }
+}
+
+function height(height) {
+    if (height !== undefined) {
+        return this.css('height', height);
+    }
+
+    var el = this[0];
+
+    switch (el) {
+        case window:
+            return window.innerHeight;
+            break;
+        case document:
+            var body = document.body,
+                html = document.documentElement,
+                heights = [body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight];
+
+            return Math.max.apply(Math, heights);
+            break;
+        default:
+            return this.length > 0 ? parseFloat(this.css('height')) : null;
+    }
 }
 
 Clus.fn.extend({
-    css: css
+    css: css,
+    width: width,
+    height: height
 });
 
 })));
