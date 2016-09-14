@@ -26,7 +26,9 @@ function css(rules, value) {
 
 function width(width) {
     if (width !== undefined) {
-        return this.css('width', width);
+        this.each(el => {
+            el.style.width = `${width}px`;
+        });
     }
 
     let el = this[0];
@@ -45,7 +47,9 @@ function width(width) {
 
 function height(height) {
     if (height !== undefined) {
-        return this.css('height', height);
+        this.each(el => {
+            el.style.height = `${height}px`;
+        });
     }
 
     let el = this[0];

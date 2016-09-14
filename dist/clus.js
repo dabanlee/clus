@@ -939,7 +939,9 @@ function css(rules, value) {
 
 function width(width) {
     if (width !== undefined) {
-        return this.css('width', width);
+        this.each(function (el) {
+            el.style.width = width + 'px';
+        });
     }
 
     var el = this[0];
@@ -958,7 +960,9 @@ function width(width) {
 
 function height(height) {
     if (height !== undefined) {
-        return this.css('height', height);
+        this.each(function (el) {
+            el.style.height = height + 'px';
+        });
     }
 
     var el = this[0];
