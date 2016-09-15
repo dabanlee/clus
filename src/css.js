@@ -34,14 +34,15 @@ function width(width) {
     let el = this[0];
 
     switch (el) {
-        case window:
+        case window: {
             return window.innerWidth;
-            break;
-        case document:
+        }
+        case document: {
             return document.documentElement.scrollWidth;
-            break;
-        default:
+        }
+        default: {
             return this.length > 0 ? parseFloat(this.css('width')) : null;
+        }
     }
 }
 
@@ -55,18 +56,19 @@ function height(height) {
     let el = this[0];
 
     switch (el) {
-        case window:
+        case window: {
             return window.innerHeight;
-            break;
-        case document:
+        }
+        case document: {
             let body = document.body,
                 html = document.documentElement,
                 heights = [body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight];
 
             return Math.max.apply(Math, heights);
-            break;
-        default:
+        }
+        default: {
             return this.length > 0 ? parseFloat(this.css('height')) : null;
+        }
     }
 }
 

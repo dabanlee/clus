@@ -948,13 +948,17 @@ function width(width) {
 
     switch (el) {
         case window:
-            return window.innerWidth;
-            break;
+            {
+                return window.innerWidth;
+            }
         case document:
-            return document.documentElement.scrollWidth;
-            break;
+            {
+                return document.documentElement.scrollWidth;
+            }
         default:
-            return this.length > 0 ? parseFloat(this.css('width')) : null;
+            {
+                return this.length > 0 ? parseFloat(this.css('width')) : null;
+            }
     }
 }
 
@@ -969,17 +973,21 @@ function height(height) {
 
     switch (el) {
         case window:
-            return window.innerHeight;
-            break;
+            {
+                return window.innerHeight;
+            }
         case document:
-            var body = document.body,
-                html = document.documentElement,
-                heights = [body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight];
+            {
+                var body = document.body,
+                    html = document.documentElement,
+                    heights = [body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight];
 
-            return Math.max.apply(Math, heights);
-            break;
+                return Math.max.apply(Math, heights);
+            }
         default:
-            return this.length > 0 ? parseFloat(this.css('height')) : null;
+            {
+                return this.length > 0 ? parseFloat(this.css('height')) : null;
+            }
     }
 }
 
