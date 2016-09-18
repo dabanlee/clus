@@ -58,6 +58,8 @@ $ bower i clus
 - <a href="#on">`.on()`</a>
 - <a href="#off">`.off()`</a>
 - <a href="#trigger">`.trigger()`</a>
+- <a href="#width">`.width()`</a>
+- <a href="#height">`.height()`</a>
 
 ### DOM
 
@@ -281,4 +283,26 @@ $.ajax({
         console.error(error);
     },
 });
+```
+
+<a name="width"></a>
+#### `.width()`
+
+Example:
+
+```js
+$(window).width()
+$(document).width()
+$('body').width()
+```
+
+<a name="height"></a>
+#### `.height()`
+
+Example:
+
+```js
+$(window).height()
+$(document).height()
+$('body').height()
 ```
