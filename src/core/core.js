@@ -5,6 +5,13 @@
 import init from './init';
 import extend from './extend';
 
+/**
+ * Constructor
+ *
+ * @constructor Clus
+ * @method Clus
+ * @param  {String} selector
+ */
 export default function Clus (selector) {
     return new Clus.fn.init(selector);
 }

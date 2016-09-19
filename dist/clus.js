@@ -8,9 +8,14 @@
 // initialize
 //
 
-function init() {
-    var selector = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
-
+/**
+ * Initialize
+ *
+ * @method init
+ * @param  {String} selector
+ * @return {DOM} DOMList
+ */
+function init(selector) {
     var dom = void 0,
         fragmentRE = /^\s*<(\w+|!)[^>]*>/,
         selectorType = Clus.type(selector),
@@ -51,6 +56,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 // extend
 //
 
+/**
+ * Extend object
+ *
+ * @method extend
+ * @return {Object} object
+ */
 function extend() {
     var options = void 0,
         name = void 0,
@@ -118,6 +129,13 @@ function extend() {
 // core
 //
 
+/**
+ * Constructor
+ *
+ * @constructor Clus
+ * @method Clus
+ * @param  {String} selector
+ */
 function Clus$1(selector) {
     return new Clus$1.fn.init(selector);
 }
@@ -855,6 +873,12 @@ Clus.fn.extend({
 // ajax
 //
 
+/**
+ * Initiate a Ajax request
+ *
+ * @method ajax
+ * @param  {Object} option
+ */
 function ajax() {
     var option = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
@@ -897,8 +921,15 @@ function ajax() {
     };
 }
 
-function resToJson(res) {
-    return JSON.parse(res);
+/**
+ * Parse response to json
+ *
+ * @method resToJson
+ * @param  {String}  response
+ * @return {Object}  object
+ */
+function resToJson(response) {
+    return JSON.parse(response);
 }
 
 Clus.extend({

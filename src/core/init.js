@@ -2,7 +2,14 @@
 // initialize
 //
 
-export default function init(selector = '') {
+/**
+ * Initialize
+ *
+ * @method init
+ * @param  {String} selector
+ * @return {DOM} DOMList
+ */
+export default function init(selector) {
     let dom,
         fragmentRE = /^\s*<(\w+|!)[^>]*>/,
         selectorType = Clus.type(selector),

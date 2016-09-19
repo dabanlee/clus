@@ -2,6 +2,12 @@
 // ajax
 //
 
+/**
+ * Initiate a Ajax request
+ *
+ * @method ajax
+ * @param  {Object} option
+ */
 function ajax(option = {}) {
     let xhr = new XMLHttpRequest(),
         type = option.type.toUpperCase() || 'GET',
@@ -41,8 +47,15 @@ function ajax(option = {}) {
     };
 }
 
-function resToJson(res) {
-    return JSON.parse(res);
+/**
+ * Parse response to json
+ *
+ * @method resToJson
+ * @param  {String}  response
+ * @return {Object}  object
+ */
+function resToJson(response) {
+    return JSON.parse(response);
 }
 
 Clus.extend({

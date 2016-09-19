@@ -2,6 +2,12 @@
 // extend
 //
 
+/**
+ * Extend object
+ *
+ * @method extend
+ * @return {Object} object
+ */
 export default function extend() {
     let options, name, clone, copy, source, copyIsArray,
         target = arguments[0] || {},
